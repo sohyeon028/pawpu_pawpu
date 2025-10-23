@@ -7,7 +7,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap">
     <script>
-        // Tailwind CSS에 사용자 정의 브랜드 컬러 추가
+        
         tailwind.config = {
             theme: {
                 extend: {
@@ -15,7 +15,7 @@
                         'brand-main': '#8C6B5E',
                         'brand-emphasis': '#FFB78C',
                         'brand-sub': '#FFE0C9',
-                        'brand-bg': '#FFFBF7', // Body 배경을 위한 더 연한 보조색
+                        'brand-bg': '#FFFBF7', 
                     }
                 }
             }
@@ -25,33 +25,73 @@
         body {
             font-family: 'Noto Sans KR', sans-serif;
         }
+        /* 기존 스크롤 리빌 효과 */
         .scroll-reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease-out, transform 0.8s ease-out; }
         .scroll-reveal.visible { opacity: 1; transform: translateY(0); }
-        .chat-bubble { max-width: 70%; padding: 12px 20px; border-radius: 20px; margin-bottom: 15px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); position: relative; }
+        
+        /* [1. 메신저 섹션 크기 확대] */
+        .chat-bubble { 
+            padding: 16px 24px; /* 패딩 증가 */ 
+            border-radius: 20px; 
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); 
+            position: relative; 
+            font-size: 1.125rem; /* text-lg에 해당 */
+        }
         .chat-theirs { background-color: #ffffff; color: #333; align-self: flex-start; border-bottom-left-radius: 4px; }
         .chat-mine { background-color: #ffe600; color: #3c1e1e; align-self: flex-end; border-bottom-right-radius: 4px; }
+
+        /* [3. 브랜드 소개글 줄별 애니메이션을 위한 스타일] */
+        .intro-line { 
+            display: block; /* 한 줄씩 나오게 하기 위해 block으로 설정 */
+            opacity: 0; 
+            transform: translateY(10px); 
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .intro-line.visible { 
+            opacity: 1; 
+            transform: translateY(0); 
+        }
+
         header { position: fixed; top: 0; left: 0; right: 0; z-index: 50; background-color: rgba(255, 251, 247, 0.8); backdrop-filter: blur(10px); transition: background-color 0.3s, box-shadow 0.3s; }
-        /* 인터랙티브 티셔츠 섹션 스타일 */
         .expression-thumb { transition: transform 0.2s ease, box-shadow 0.2s ease; }
         .expression-thumb:hover { transform: scale(1.1); box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
         .char-tab { transition: background-color 0.3s, color 0.3s; }
         .char-tab.active { background-color: #8C6B5E; color: white; }
-        /* 최애 캐릭터 투표 관련 스타일 */
         .poll-option:not(.voted):hover img { transform: scale(1.05); }
         .poll-option:not(.voted):hover .poll-name { color: #FFB78C; }
         .poll-option.voted { cursor: default; }
         .poll-option.voted:not(.selected) img { filter: grayscale(80%); opacity: 0.7; transition: filter 0.5s, opacity 0.5s; }
+        
+        #hero-text::after {
+            content: '|';
+            margin-left: 0.5rem;
+            animation: blink-caret .75s step-end infinite;
+        }
+        @keyframes blink-caret {
+            from, to { opacity: 1; }
+            50% { opacity: 0; }
+        }
+        #hero-text.typing-done::after {
+            animation: none;
+            content: ''; /* 타이핑 완료 후 커서 제거 */
+        }
+
+        .content-wrapper {
+            position: relative;
+            z-index: 10;
+            background-color: #FFFBF7; 
+        }
     </style>
 </head>
 <body class="bg-brand-bg text-brand-main">
 
     <!-- 헤더 -->
     <header class="w-full border-b border-brand-sub">
-        <nav class="container mx-auto px-6 py-4 flex justify-between items-center max-w-screen-xl">
+        <nav class="container mx-auto px-6 py-6 flex justify-between items-center max-w-7xl">
             <a href="#" class="flex items-center">
-                <img src="images/파푸파푸 로고.png" alt="브랜드 로고" class="h-10">
+                <img src="images/파푸파푸 로고.png" alt="브랜드 로고" class="h-20">
             </a>
-            <div class="hidden md:flex items-center space-x-8 font-semibold">
+            <div class="hidden md:flex items-center space-x-10 font-semibold text-lg">
                 <a href="#" class="hover:text-brand-emphasis transition-colors">홈</a>
                 <a href="#" class="hover:text-brand-emphasis transition-colors">브랜드</a>
                 <a href="#" class="hover:text-brand-emphasis transition-colors">캐릭터</a>
@@ -68,192 +108,212 @@
 
     <main>
         <!-- 히어로 섹션 -->
-        <section class="w-full h-[840px] bg-gray-200 pt-[84px]">
-            <img src=" .gif" alt="캐릭터 GIF" class="w-full h-full object-cover">
-        </section>
-
-        <!-- 메신저 섹션 (수정 없음) -->
-        <section class="py-24 bg-slate-100">
-            <div id="chat-container" class="container mx-auto max-w-md flex flex-col space-y-4 px-4">
-                <div class="chat-bubble chat-theirs scroll-reveal"><p>Text 1</p></div>
-                <div class="chat-bubble chat-mine scroll-reveal"><p>Text 2</p></div>
-                <div class="chat-bubble chat-theirs scroll-reveal"><p>Text 3</p></div>
-                <div class="chat-bubble chat-mine scroll-reveal"><p>Text 4</p></div>
-                <div class="chat-bubble chat-theirs scroll-reveal"><p>Text 5</p></div>
+        <section id="hero-section" class="sticky top-0 w-full h-screen overflow-hidden">
+            <div id="hero-content" class="relative w-full h-full">
+                <!-- Background GIF -->
+                <img src="images/히어로.gif" alt="캐릭터 GIF" class="absolute top-0 left-0 w-full h-full object-cover z-0">
+                <!-- Overlay to improve text readability -->
+                <div class="absolute top-0 left-0 w-full h-full bg-black bg-opacity-30 z-10"></div>
+                <!-- Text Content -->
+                <div class="relative z-20 h-full flex items-center justify-center text-white px-6">
+                    <h1 id="hero-text" class="text-4xl md:text-5xl lg:text-6xl font-bold" style="text-shadow: 2px 2px 8px rgba(0,0,0,0.6);"></h1>
+                </div>
             </div>
         </section>
 
-        <!-- 브랜드 소개 섹션 -->
-        <section class="container mx-auto max-w-4xl px-6 py-20 text-center space-y-12">
-            <div class="scroll-reveal">
-                <h2 class="text-3xl md:text-4xl font-bold mb-4 text-brand-main">브랜드 소개</h2>
-                <p class="text-lg md:text-xl text-brand-main/80 leading-relaxed">
-                    Text 6<br> Text 7<br> Text 8<br> Text 9<br> Text 10
-                </p>
-            </div>
-            <div class="scroll-reveal rounded-lg overflow-hidden shadow-xl">
-                <img src="images/파푸파푸_소개_일러스트.png" alt="캐릭터 일러스트" class="w-full h-auto object-cover">
-            </div>
-        </section>
+        <!-- 나머지 콘텐츠 래퍼 -->
+        <div class="content-wrapper">
+            <!-- 메신저 섹션 - 간격 넓힘 (space-y-12) 및 스크롤 시 하나씩 나타나게 JS 로직 수정 -->
+            <section class="py-24 bg-slate-100">
+                <div id="chat-container" class="container mx-auto max-w-2xl flex flex-col space-y-12 px-4">
+                    <!-- chat-bubble에 text-lg 클래스는 CSS로 이동됨 -->
+                    <div class="chat-bubble chat-theirs scroll-reveal w-fit"><p>너 파푸파푸라는 캐릭터 브랜드 알아?</p></div>
+                    <div class="chat-bubble chat-mine scroll-reveal w-fit"><p>아니? 처음 들어봐</p></div>
+                    <div class="chat-bubble chat-theirs scroll-reveal w-fit"><p>검색해 봐, 루디라는 애 이 세상 귀여움이 아님;;</p></div>
+                    <div class="chat-bubble chat-mine scroll-reveal w-fit"><p>오~ 나는 뭔가 밤에 야광으로 은은하게 빛날 거 같은 루나가 더 귀여워 보임 </p></div>
+                    <div class="chat-bubble chat-theirs scroll-reveal w-fit"><p>맞음. 얘네 손발바닥은 야광 컨셉이라 어두운 곳이나 밤에는 손발바닥 빛난대</p></div>
+                    <div class="chat-bubble chat-mine scroll-reveal w-fit"><p>말도 안 돼!! 그냥 둘 다 이 세상 귀여움이 아니잖아</p></div>
+                    <div class="chat-bubble chat-theirs scroll-reveal w-fit"><p>검색해보니까 나중에 또 새로운 애들 나타난다더라</p></div>
+                </div>
+            </section>
 
-        <!-- 캐릭터 소개 -->
-        <section class="py-24 bg-white">
-            <div class="container mx-auto max-w-4xl px-6 text-center">
-                <h2 class="text-4xl font-bold mb-12 scroll-reveal text-brand-main">우리의 친구들</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
-                    <div class="scroll-reveal">
-                        <div class="bg-brand-sub p-6 rounded-full w-48 h-48 mx-auto flex items-center justify-center mb-4 overflow-hidden">
-                             <img src="images/루디_V3.png" alt="캐릭터1" class="w-full h-full object-cover rounded-full">
-                        </div>
-                        <h3 class="text-2xl font-bold mb-2 text-brand-main">루디</h3>
-                        <p class="text-brand-main/70">소개글 작성</p>
-                    </div>
-                    <div class="scroll-reveal" style="transition-delay: 0.2s;">
-                         <div class="bg-brand-sub p-6 rounded-full w-48 h-48 mx-auto flex items-center justify-center mb-4 overflow-hidden">
-                             <img src="images/루나_V3.png" alt="캐릭터2" class="w-full h-full object-cover rounded-full">
-                        </div>
-                        <h3 class="text-2xl font-bold mb-2 text-brand-main">루나</h3>
-                        <p class="text-brand-main/70">소개글 작성</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-        
-        <!-- =================================================================== -->
-        <!-- ==================== 신규 일러스트 섹션 =========================== -->
-        <!-- =================================================================== -->
-        <section class="py-20 bg-brand-bg">
-             <div class="container mx-auto px-6 max-w-5xl">
-                <h2 class="text-4xl font-bold text-center mb-12 scroll-reveal text-brand-main">캐릭터들의 이야기</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <div class="scroll-reveal rounded-lg overflow-hidden shadow-lg transform transition duration-300 hover:scale-105">
-                        <img src="images/파푸파푸_일러스트1_반딧불이_구경.png" alt="반딧불이 구경하는 일러스트" class="w-full h-auto object-cover">
-                        <div class="p-6 bg-white">
-                            <h3 class="text-xl font-bold text-brand-main">고요한 밤, 반딧불이 구경</h3>
-                            <p class="text-brand-main/70 mt-2">캐릭터들이 함께 반짝이는 반딧불이를 구경하며 평화로운 시간을 보내고 있어요.</p>
-                        </div>
-                    </div>
-                    <div class="scroll-reveal rounded-lg overflow-hidden shadow-lg transform transition duration-300 hover:scale-105" style="transition-delay: 0.2s;">
-                        <img src="images/파푸파푸_일러스트2_동굴지기.png" alt="동굴에서 불을 지피는 일러스트" class="w-full h-auto object-cover">
-                        <div class="p-6 bg-white">
-                            <h3 class="text-xl font-bold text-brand-main">아늑한 동굴 속 모닥불</h3>
-                            <p class="text-brand-main/70 mt-2">추운 날, 동굴에 모여 앉아 모닥불을 피우며 서로의 온기를 나누고 있답니다.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <!-- =================================================================== -->
-
-        <!-- =================================================================== -->
-        <!-- ================ '온라인 컨셉 스토어' 섹션 (신규 대체) ================ -->
-        <!-- =================================================================== -->
-        <section id="store" class="py-24 bg-brand-sub space-y-24">
-            <!-- Zone 1: 의류 존 -->
-            <div class="container mx-auto max-w-6xl px-6 scroll-reveal">
-                <div class="text-center mb-12">
-                    <h2 class="text-4xl font-bold text-brand-main">Text 13</h2>
-                    <p class="text-lg text-brand-main/80 mt-2">Text 14</p>
-                </div>
-                <div class="grid md:grid-cols-2 gap-12 items-center">
-                    <div class="bg-white rounded-lg flex items-center justify-center p-8 shadow-sm">
-                        <img id="main-tshirt-image" src="" alt="인터랙티브 티셔츠" class="max-w-full h-auto transition-all duration-300">
-                    </div>
-                    <div>
-                        <div class="mb-6">
-                            <h3 class="text-xl font-bold text-brand-main">Character 1</h3>
-                        </div>
-                        <div id="expression-grid" class="grid grid-cols-2 gap-4 max-w-[220px]"></div>
-                        <div class="mt-8">
-                            <h3 class="text-2xl font-bold text-brand-main">Product 1</h3>
-                            <p class="text-brand-main/80 mt-2">Text 15<br>Text 16</p>
-                            <button class="mt-6 bg-brand-emphasis text-white font-bold py-3 px-8 rounded-lg hover:opacity-90 transition-opacity">Button</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Zone 2: 가방 존 -->
-            <div class="container mx-auto max-w-6xl px-6 scroll-reveal">
-                 <div class="relative rounded-2xl overflow-hidden bg-brand-main p-12 md:p-20 flex items-center h-[500px]">
-                    <img src="https://placehold.co/1200x500/FFE0C9/ffffff?text=배경+이미지" class="absolute inset-0 w-full h-full object-cover opacity-20">
-                    <div class="relative z-10 grid md:grid-cols-2 gap-12 items-center">
-                        <div class="text-center md:text-left">
-                            <h2 class="text-4xl font-bold text-white leading-tight">Text 17</h2>
-                            <p class="text-lg text-gray-200 mt-4">Text 18<br>Text 19</p>
-                             <button class="mt-8 bg-brand-emphasis text-white font-bold py-3 px-8 rounded-lg hover:opacity-90 transition-opacity">Button</button>
-                        </div>
-                        <div class="flex justify-center">
-                            <img src="images/파푸파푸_에코백_목업.png" alt="에코백" class="w-64 md:w-80 transform transition duration-500 hover:scale-105">
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Zone 3: 문구 존 -->
-            <div class="container mx-auto max-w-5xl px-6 scroll-reveal">
-                <div class="text-center mb-12">
-                    <h2 class="text-4xl font-bold text-brand-main">Text 20</h2>
-                    <p class="text-lg text-brand-main/80 mt-2">Text 21</p>
-                </div>
-                <div class="relative bg-white rounded-2xl p-8 h-[500px] shadow-inner border border-brand-sub">
-                    <a href="#" class="absolute top-1/4 left-[10%] w-1/3 transform -rotate-6 transition duration-300 hover:scale-105 hover:shadow-xl hover:-rotate-3">
-                        <img src="images/파푸파푸_투두리스트_메모지.png" alt="투두리스트" class="w-full rounded-lg shadow-lg">
-                    </a>
-                    <a href="#" class="absolute top-[15%] right-[15%] w-[40%] transform rotate-3 transition duration-300 hover:scale-105 hover:shadow-xl hover:rotate-1">
-                        <img src="images/파푸파푸_메모지.png" alt="메모지" class="w-full rounded-lg shadow-lg">
-                    </a>
-                    <div class="absolute bottom-[10%] left-[20%] text-4xl transform -rotate-12 text-brand-main opacity-50">✏️</div>
-                    <div class="absolute bottom-[15%] right-[10%] text-3xl text-brand-main opacity-60">📎</div>
-                </div>
-            </div>
-        </section>
-        <!-- =================================================================== -->
-
-        <!-- 다이어리 앱 소개 -->
-        <section class="py-24 bg-white">
-            <div class="container mx-auto max-w-5xl px-6 grid md:grid-cols-2 gap-12 items-center">
-                <div class="text-center md:text-left scroll-reveal">
-                    <h2 class="text-4xl font-bold mb-4 text-brand-main">캐릭터 다이어리 앱</h2>
-                    <p class="text-xl text-brand-main/80 leading-relaxed">
-                        Text 22<br> Text 23<br> Text 24
+            <!-- 브랜드 소개 섹션 -->
+            <section class="container mx-auto max-w-6xl px-6 py-20 text-center space-y-12">
+                <!-- 소개 글 폰트 크기 유지: text-base md:text-lg -->
+                <!-- [3. 소개글 줄별 애니메이션을 위해 p 태그에 id 추가 및 내용 수정] -->
+                <div id="brand-intro-text-wrapper" class="scroll-reveal">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-4 text-brand-main">브랜드 소개</h2>
+                    <p id="brand-intro-text" class="text-base md:text-lg text-brand-main/80 leading-relaxed text-center">
+                        <span class="intro-line">누구나 마음속에 빛바랜 추억, 잠시 접어둔 꿈 하나쯤은 품고 살아갑니다.</span>
+                        <span class="intro-line">시간에 무뎌지고 현실에 치여, 한때는 전부였던 그 소중한 마음으로 가는 길을 잃어버리기도 하죠.</span>
+                        <span class="intro-line">자신의 빛이 저주라 믿었던 강아지 루디, 상처 때문에 마음의 문을 닫았던 고양이 루나.</span>
+                        <span class="intro-line">혼자였다면 어둠 속에 머물렀을 두 친구는, 서로의 빛과 온기에 기대어 함께 길을 나섭니다.</span>
+                        <span class="intro-line">그들의 여정은 잃어버린 것을 되찾는 여정인 동시에, 자신의 상처가 누군가를 치유하는 희망이 될 수 있음을 깨닫는 과정입니다.</span>
+                        <span class="intro-line">저희의 목표는 단지 귀여운 캐릭터를 만드는 것이 아닙니다.</span>
+                        <span class="intro-line">당신의 삶이라는 여정 속에서 잠시 길을 잃었다고 느낄 때, 추억을 되새기며 작은 위로와 휴식을 취할 수 있는 ‘나만의 숲’이 되는 것입니다.</span>
+                        <span class="intro-line">루디와 친구들의 발자국을 따라, 당신의 가장 따뜻했던 순간으로 함께 떠나보세요.</span>
                     </p>
                 </div>
-                <div class="scroll-reveal">
-                    <img src="https://placehold.co/500x700/FFE0C9/8C6B5E?text=앱+UI" alt="다이어리 앱 UI" class="rounded-xl shadow-2xl mx-auto">
+                <!-- [2. 이미지 크기 더 줄임: max-w-2xl, 그림자 및 테두리 완전히 삭제] -->
+                <div class="scroll-reveal max-w-2xl mx-auto overflow-hidden">
+                    <img src="images/파푸파푸_소개_일러스트.png" alt="캐릭터 일러스트" class="w-full h-auto object-cover">
                 </div>
-            </div>
-        </section>
+            </section>
 
-        <!-- 최애 캐릭터 투표 -->
-        <section id="poll-section" class="py-24 bg-brand-sub">
-            <div class="container mx-auto max-w-2xl px-6 text-center">
-                <h2 class="text-4xl font-bold mb-12 scroll-reveal text-brand-main">당신의 최애 캐릭터는?</h2>
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-8">
-                    <div class="poll-option cursor-pointer scroll-reveal" data-character="char1">
-                        <div class="relative">
-                            <img src="images/루디_V3.png" alt="캐릭터1" class="w-full rounded-full shadow-lg transition-transform duration-300">
-                             <div class="poll-result absolute inset-0 bg-black bg-opacity-50 rounded-full flex-col items-center justify-center text-white hidden">
-                                <span class="text-4xl font-bold"></span><span class="text-sm"></span>
+            <!-- 캐릭터 소개 -->
+            <section class="py-24 bg-white">
+                <div class="container mx-auto max-w-6xl px-6 text-center">
+                    <h2 class="text-4xl font-bold mb-12 scroll-reveal text-brand-main">우리의 친구들</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+                        <div class="scroll-reveal">
+                            <div class="bg-brand-sub p-6 rounded-full w-48 h-48 mx-auto flex items-center justify-center mb-4 overflow-hidden">
+                                 <img src="images/루디_V3.png" alt="캐릭터1" class="w-full h-full object-cover rounded-full">
                             </div>
+                            <h3 class="text-2xl font-bold mb-2 text-brand-main">루디</h3>
+                            <p class="text-brand-main/70">소개글 작성</p>
                         </div>
-                        <h3 class="poll-name text-2xl font-bold mt-4 transition-colors">루디</h3>
-                    </div>
-                     <div class="poll-option cursor-pointer scroll-reveal" style="transition-delay: 0.2s;" data-character="char2">
-                        <div class="relative">
-                            <img src="images/루나_V3.png" alt="캐릭터2" class="w-full rounded-full shadow-lg transition-transform duration-300">
-                             <div class="poll-result absolute inset-0 bg-black bg-opacity-50 rounded-full flex-col items-center justify-center text-white hidden">
-                                <span class="text-4xl font-bold"></span><span class="text-sm"></span>
+                        <div class="scroll-reveal" style="transition-delay: 0.2s;">
+                             <div class="bg-brand-sub p-6 rounded-full w-48 h-48 mx-auto flex items-center justify-center mb-4 overflow-hidden">
+                                 <img src="images/루나_V3.png" alt="캐릭터2" class="w-full h-full object-cover rounded-full">
                             </div>
+                            <h3 class="text-2xl font-bold mb-2 text-brand-main">루나</h3>
+                            <p class="text-brand-main/70">소개글 작성</p>
                         </div>
-                        <h3 class="poll-name text-2xl font-bold mt-4 transition-colors">루나</h3>
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
+            
+            <!-- 일러스트 섹션 -->
+            <section class="py-20 bg-brand-bg">
+                 <div class="container mx-auto px-6 max-w-7xl">
+                    <h2 class="text-4xl font-bold text-center mb-12 scroll-reveal text-brand-main">캐릭터들의 이야기</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div class="scroll-reveal rounded-lg overflow-hidden shadow-lg transform transition duration-300 hover:scale-105">
+                            <img src="images/파푸파푸_일러스트1_반딧불이_구경.png" alt="반딧불이 구경하는 일러스트" class="w-full h-auto object-cover">
+                            <div class="p-6 bg-white">
+                                <h3 class="text-xl font-bold text-brand-main">고요한 밤, 반딧불이 구경</h3>
+                                <p class="text-brand-main/70 mt-2">캐릭터들이 함께 반짝이는 반딧불이를 구경하며 평화로운 시간을 보내고 있어요.</p>
+                            </div>
+                        </div>
+                        <div class="scroll-reveal rounded-lg overflow-hidden shadow-lg transform transition duration-300 hover:scale-105" style="transition-delay: 0.2s;">
+                            <img src="images/파푸파푸_일러스트2_동굴지기.png" alt="동굴에서 불을 지피는 일러스트" class="w-full h-auto object-cover">
+                            <div class="p-6 bg-white">
+                                <h3 class="text-xl font-bold text-brand-main">아늑한 동굴 속 모닥불</h3>
+                                <p class="text-brand-main/70 mt-2">추운 날, 동굴에 모여 앉아 모닥불을 피우며 서로의 온기를 나누고 있답니다.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            
+            <!-- 굿즈/상품 -->
+            <section id="store" class="py-24 bg-brand-sub space-y-24">
+                <!-- Zone 1: 의류 존 -->
+                <div class="container mx-auto max-w-7xl px-6 scroll-reveal">
+                    <div class="text-center mb-12">
+                        <h2 class="text-4xl font-bold text-brand-main">Text 13</h2>
+                        <p class="text-lg text-brand-main/80 mt-2">Text 14</p>
+                    </div>
+                    <div class="grid md:grid-cols-2 gap-12 items-center">
+                        <div class="bg-white rounded-lg flex items-center justify-center p-8 shadow-sm">
+                            <img id="main-tshirt-image" src="" alt="인터랙티브 티셔츠" class="max-w-full h-auto transition-all duration-300">
+                        </div>
+                        <div>
+                            <div class="mb-6">
+                                <h3 class="text-xl font-bold text-brand-main">Character 1</h3>
+                            </div>
+                            <div id="expression-grid" class="grid grid-cols-2 gap-4 max-w-[220px]"></div>
+                            <div class="mt-8">
+                                <h3 class="text-2xl font-bold text-brand-main">Product 1</h3>
+                                <p class="text-brand-main/80 mt-2">Text 15<br>Text 16</p>
+                                <button class="mt-6 bg-brand-emphasis text-white font-bold py-3 px-8 rounded-lg hover:opacity-90 transition-opacity">Button</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Zone 2: 가방 존 -->
+                <div class="container mx-auto max-w-7xl px-6 scroll-reveal">
+                     <div class="relative rounded-2xl overflow-hidden bg-brand-main p-12 md:p-20 flex items-center h-[500px]">
+                        <img src="https://placehold.co/1200x500/FFE0C9/ffffff?text=배경+이미지" class="absolute inset-0 w-full h-full object-cover opacity-20">
+                        <div class="relative z-10 grid md:grid-cols-2 gap-12 items-center">
+                            <div class="text-center md:text-left">
+                                <h2 class="text-4xl font-bold text-white leading-tight">Text 17</h2>
+                                <p class="text-lg text-gray-200 mt-4">Text 18<br>Text 19</p>
+                                 <button class="mt-8 bg-brand-emphasis text-white font-bold py-3 px-8 rounded-lg hover:opacity-90 transition-opacity">Button</button>
+                            </div>
+                            <div class="flex justify-center">
+                                <img src="images/파푸파푸_에코백_목업.png" alt="에코백" class="w-64 md:w-80 transform transition duration-500 hover:scale-105">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Zone 3: 문구 존 - 네모난 박스 테두리 (border border-brand-sub) 삭제 -->
+                <div class="container mx-auto max-w-7xl px-6 scroll-reveal">
+                    <div class="text-center mb-12">
+                        <h2 class="text-4xl font-bold text-brand-main">Text 20</h2>
+                        <p class="text-lg text-brand-main/80 mt-2">Text 21</p>
+                    </div>
+                    <div class="relative bg-white rounded-2xl p-8 h-[500px] shadow-inner">
+                        <a href="#" class="absolute top-1/4 left-[10%] w-1/3 transform -rotate-6 transition duration-300 hover:scale-105 hover:shadow-xl hover:-rotate-3">
+                            <img src="images/파푸파푸_투두리스트_메모지.png" alt="투두리스트" class="w-full rounded-lg shadow-lg">
+                        </a>
+                        <a href="#" class="absolute top-[15%] right-[15%] w-[40%] transform rotate-3 transition duration-300 hover:scale-105 hover:shadow-xl hover:rotate-1">
+                            <img src="images/파푸파푸_메모지.png" alt="메모지" class="w-full rounded-lg shadow-lg">
+                        </a>
+                        <div class="absolute bottom-[10%] left-[20%] text-4xl transform -rotate-12 text-brand-main opacity-50">✏️</div>
+                        <div class="absolute bottom-[15%] right-[10%] text-3xl text-brand-main opacity-60">📎</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 다이어리 앱 소개 -->
+            <section class="py-24 bg-white">
+                <div class="container mx-auto max-w-7xl px-6 grid md:grid-cols-2 gap-12 items-center">
+                    <div class="text-center md:text-left scroll-reveal">
+                        <h2 class="text-4xl font-bold mb-4 text-brand-main">캐릭터 다이어리 앱</h2>
+                        <p class="text-xl text-brand-main/80 leading-relaxed">
+                            Text 22<br> Text 23<br> Text 24
+                        </p>
+                    </div>
+                    <div class="scroll-reveal">
+                        <img src="https://placehold.co/500x700/FFE0C9/8C6B5E?text=앱+UI" alt="다이어리 앱 UI" class="rounded-xl shadow-2xl mx-auto">
+                    </div>
+                </div>
+            </section>
+
+            <!-- 최애 캐릭터 투표 -->
+            <section id="poll-section" class="py-24 bg-brand-sub">
+                <div class="container mx-auto max-w-4xl px-6 text-center">
+                    <h2 class="text-4xl font-bold mb-12 scroll-reveal text-brand-main">당신의 최애 캐릭터는?</h2>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-8">
+                        <div class="poll-option cursor-pointer scroll-reveal" data-character="char1">
+                            <div class="relative">
+                                <img src="images/루디_V3.png" alt="캐릭터1" class="w-full rounded-full shadow-lg transition-transform duration-300">
+                                 <div class="poll-result absolute inset-0 bg-black bg-opacity-50 rounded-full flex-col items-center justify-center text-white hidden">
+                                    <span class="text-4xl font-bold"></span><span class="text-sm"></span>
+                                </div>
+                            </div>
+                            <h3 class="poll-name text-2xl font-bold mt-4 transition-colors">루디</h3>
+                        </div>
+                         <div class="poll-option cursor-pointer scroll-reveal" style="transition-delay: 0.2s;" data-character="char2">
+                            <div class="relative">
+                                <img src="images/루나_V3.png" alt="캐릭터2" class="w-full rounded-full shadow-lg transition-transform duration-300">
+                                 <div class="poll-result absolute inset-0 bg-black bg-opacity-50 rounded-full flex-col items-center justify-center text-white hidden">
+                                    <span class="text-4xl font-bold"></span><span class="text-sm"></span>
+                                </div>
+                            </div>
+                            <h3 class="poll-name text-2xl font-bold mt-4 transition-colors">루나</h3>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
     </main>
 
     <!-- 푸터 -->
     <footer class="bg-brand-main text-white">
-        <div class="container mx-auto max-w-6xl px-6 py-12">
+        <div class="container mx-auto max-w-7xl px-6 py-12">
             <div class="flex flex-col md:flex-row justify-between items-center text-center md:text-left">
                 <div class="mb-6 md:mb-0">
                     <h3 class="text-xl font-bold">Pawpu-Pawpu</h3>
@@ -270,12 +330,21 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // --- 스크롤 및 헤더 스크립트 ---
+            
+            // --- 1. 일반 스크롤 애니메이션 (`scroll-reveal`) 반복 적용 ---
             const scrollElements = document.querySelectorAll('.scroll-reveal');
             const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+                entries.forEach(entry => { 
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    } else {
+                        // 뷰포트에서 벗어나면 애니메이션 초기화 (반복 적용을 위해)
+                        entry.target.classList.remove('visible'); 
+                    }
+                });
             }, { threshold: 0.1 });
             scrollElements.forEach(el => observer.observe(el));
+
 
             const header = document.querySelector('header');
             window.addEventListener('scroll', () => {
@@ -283,29 +352,144 @@
                 header.classList.toggle('shadow-lg', isScrolled);
                 header.style.backgroundColor = isScrolled ? 'rgba(255, 251, 247, 0.95)' : 'rgba(255, 251, 247, 0.8)';
             });
+
+            // --- 3. 히어로 텍스트 타이핑 반복 효과 ---
+            const heroTextElement = document.getElementById('hero-text');
+            const heroSection = document.getElementById('hero-section');
+            const textToType = "귀여운 발자국을 남기는\n사랑스러운 우리의 친구";
+
+            function typeWriter() {
+                let i = 0;
+                heroTextElement.innerHTML = ""; // 초기화
+                heroTextElement.classList.remove('typing-done');
+
+                function typeLoop() {
+                    if (i < textToType.length) {
+                        const char = textToType.charAt(i);
+                        if (char === '\n') {
+                            heroTextElement.innerHTML += '<br>';
+                        } else {
+                            heroTextElement.innerHTML += char;
+                        }
+                        i++;
+                        // 타이핑 중에만 커서가 깜빡이도록 처리
+                        if(heroTextElement.classList.contains('typing-done')) {
+                             heroTextElement.classList.remove('typing-done');
+                        }
+                        setTimeout(typeLoop, 120); 
+                    } else {
+                        heroTextElement.classList.add('typing-done'); // 완료 후 커서 제거
+                    }
+                }
+                typeLoop();
+            }
+
+            // 히어로 섹션이 뷰포트에 들어올 때만 타이핑 시작/반복
+            const typeWriterObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting && heroTextElement) {
+                        typeWriter();
+                        // 텍스트가 이미 보이고 있다면, 반복하지 않도록 unobserve 할 수도 있지만, 
+                        // 사용자가 반복을 원했으므로 항상 들어올 때마다 typeWriter를 호출합니다.
+                    } else if (heroTextElement) {
+                        // 뷰포트에서 벗어날 때 타이핑 중단 및 초기화 (선택 사항)
+                        // 여기서는 타이핑 완료 상태만 유지
+                        // heroTextElement.innerHTML = "";
+                    }
+                });
+            }, { threshold: 0.5 }); // 50% 이상 보일 때
+            if (heroSection && heroTextElement) {
+                typeWriterObserver.observe(heroSection);
+            }
+
+            // --- 새로운 히어로 스크롤 효과 (기존 로직 유지) ---
+            const heroContent = document.getElementById('hero-content');
+            if (heroSection && heroContent) {
+                window.addEventListener('scroll', () => {
+                    const scrollY = window.scrollY;
+                    const animationEndScroll = 500; 
+                    
+                    let progress = scrollY / animationEndScroll;
+                    progress = Math.min(1, Math.max(0, progress));
+
+                    const scale = 1 - progress * 0.15;
+                    const borderRadius = progress * 24;
+
+                    heroContent.style.transform = `scale(${scale})`;
+                    heroContent.style.borderRadius = `${borderRadius}px`;
+                });
+            }
             
-            // --- 채팅 메시지 순차적 표시 스크립트 ---
+            // --- 2. 채팅 메시지 순차적 표시 스크립트 (반복 적용 가능하도록 수정) ---
             const chatContainer = document.getElementById('chat-container');
             if (chatContainer) {
                 const messages = chatContainer.querySelectorAll('.chat-bubble');
-                let messageIndex = 0;
+                messages.forEach(msg => msg.classList.remove('visible'));
+
+                let chatIndex = 0;
+                let chatTimer = null; // 타이머 관리용
+
+                const showMessagesSequentially = () => {
+                    if (chatIndex < messages.length) {
+                        messages[chatIndex].classList.add('visible'); 
+                        chatIndex++;
+                        chatTimer = setTimeout(showMessagesSequentially, 400); 
+                    }
+                };
+
                 const chatObserver = new IntersectionObserver((entries) => {
                     if(entries[0].isIntersecting) {
-                        const showMessagesSequentially = () => {
-                            if (messageIndex < messages.length) {
-                                messages[messageIndex].style.transitionDelay = '0s';
-                                messages[messageIndex].classList.add('visible');
-                                messageIndex++;
-                                setTimeout(showMessagesSequentially, 400);
-                            }
-                        };
-                        showMessagesSequentially();
-                        chatObserver.unobserve(chatContainer);
+                        // 진입: 순차적으로 표시 시작
+                        if (chatIndex === 0) { // 애니메이션이 완료되지 않았을 때만 시작
+                             showMessagesSequentially();
+                        }
+                    } else {
+                         // 이탈: 애니메이션 초기화
+                         clearTimeout(chatTimer);
+                         messages.forEach(msg => msg.classList.remove('visible'));
+                         chatIndex = 0;
                     }
-                }, { threshold: 0.5 }); 
-                messages.forEach(msg => msg.classList.remove('visible'));
+                }, { threshold: 0.3 }); 
                 chatObserver.observe(chatContainer);
             }
+
+            // --- 2. 브랜드 소개글 줄별 순차 표시 스크립트 (반복 적용 가능하도록 수정) ---
+            const introTextWrapper = document.getElementById('brand-intro-text-wrapper');
+            const introLines = document.querySelectorAll('#brand-intro-text .intro-line');
+
+            if (introTextWrapper && introLines.length > 0) {
+                introLines.forEach(line => line.classList.remove('visible'));
+
+                let lineIndex = 0;
+                let introTimer = null; // 타이머 관리용
+
+                const showLinesSequentially = () => {
+                    if (lineIndex < introLines.length) {
+                        introLines[lineIndex].classList.add('visible');
+                        lineIndex++;
+                        introTimer = setTimeout(showLinesSequentially, 200); 
+                    }
+                };
+
+                const introObserver = new IntersectionObserver((entries) => {
+                    if (entries[0].isIntersecting) {
+                        // 진입: 순차적으로 표시 시작
+                        if (lineIndex === 0) { // 애니메이션이 완료되지 않았을 때만 시작
+                            showLinesSequentially();
+                        }
+                    } else {
+                         // 이탈: 애니메이션 초기화
+                         clearTimeout(introTimer);
+                         introLines.forEach(line => line.classList.remove('visible'));
+                         lineIndex = 0;
+                    }
+                }, {
+                    threshold: 0.1
+                });
+                introObserver.observe(introTextWrapper);
+            }
+            // -------------------------------------------------------------------
+
 
             // --- '인터랙티브 티셔츠' 스크립트 ---
             const mainTshirtImage = document.getElementById('main-tshirt-image');
@@ -313,19 +497,20 @@
             
             const imageData = {
                 rudy: {
-                    default: 'https://placehold.co/500x500/ffedd5/8c5a1d?text=Rudy+T-Shirt', 
+                    default: 'images/티셔츠 목업_메인.png', 
                     expressions: [
-                        'https://placehold.co/500x500/ffedd5/8c5a1d?text=Rudy+Expr1',
-                        'https://placehold.co/500x500/ffedd5/8c5a1d?text=Rudy+Expr2'
+                        'images/루디_티셔츠1_목업.png',
+                        'images/루나_티셔츠1_목업.png'
                     ],
                     thumbs: [
-                        'https://placehold.co/150x150/ffedd5/8c5a1d?text=R1',
-                        'https://placehold.co/150x150/ffedd5/8c5a1d?text=R2'
+                        'images/루디_표정1_섬네일.png',
+                        'images/루나_표정1_섬네일.png'
                     ]
                 }
             };
 
             function loadExpressions() {
+                if (!expressionGrid || !mainTshirtImage) return;
                 expressionGrid.innerHTML = '';
                 const charData = imageData.rudy; // 캐릭터1(rudy) 데이터만 사용
                 mainTshirtImage.src = charData.default;
@@ -343,10 +528,11 @@
 
             loadExpressions(); // 페이지 로드 시 캐릭터1 표정 로드
 
-            // --- '최애 캐릭터 투표' 스크립트 ---
+            // --- '최애 캐릭터 투표' 스크립트 (Firestore 사용 권장) ---
             const pollSection = document.getElementById('poll-section');
             if (pollSection) {
                 const pollOptions = pollSection.querySelectorAll('.poll-option');
+                // localStorage 대신 Firestore 사용이 권장되지만, 기존 로직 유지
                 let votes = JSON.parse(localStorage.getItem('pawpu_votes')) || { char1: 0, char2: 0 };
                 function updatePollResults(show) {
                     const totalVotes = Object.values(votes).reduce((s, c) => s + c, 0);
@@ -381,4 +567,3 @@
     </script>
 </body>
 </html>
-
