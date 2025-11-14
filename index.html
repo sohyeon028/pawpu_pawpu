@@ -120,6 +120,16 @@
             font-weight: 500;
         }
 
+        /* --- 루나 전용 스타일 --- */
+        .luna-hashtag {
+            background-color: #E6E0F8; /* 연보라색 */
+            color: #5D5470; /* 어두운 보라색 텍스트 */
+        }
+        .luna-bg {
+            background-color: #bcb2da; /* 연보라색 */
+        }
+
+
         /* --- 스토리 스크롤 박스 스타일 --- */
         .story-scroll-box {
             overflow-y: auto;
@@ -150,11 +160,11 @@
                 <img src="images/파푸파푸 로고.png" alt="브랜드 로고" class="h-20">
             </a>
             <div class="hidden md:flex items-center space-x-10 font-semibold text-lg">
-                <a href="#" class="hover:text-brand-emphasis transition-colors">홈</a>
-                <a href="#" class="hover:text-brand-emphasis transition-colors">브랜드</a>
-                <a href="#" class="hover:text-brand-emphasis transition-colors">캐릭터</a>
-                <a href="#" class="hover:text-brand-emphasis transition-colors">상품</a>
-                <a href="#" class="hover:text-brand-emphasis transition-colors">고객센터</a>
+                <a href="#hero-section" class="hover:text-brand-emphasis transition-colors">홈</a>
+                <a href="#brand-intro-section" class="hover:text-brand-emphasis transition-colors">브랜드</a>
+                <a href="#character-intro-section" class="hover:text-brand-emphasis transition-colors">캐릭터</a>
+                <a href="#store" class="hover:text-brand-emphasis transition-colors">상품</a>
+                <a href="#poll-section" class="hover:text-brand-emphasis transition-colors">고객센터</a>
             </div>
             <div class="md:hidden">
                 <button class="text-brand-main">
@@ -188,7 +198,7 @@
                 </div>
             </section>
 
-            <section class="container mx-auto max-w-6xl px-6 py-20 text-center space-y-12">
+            <section id="brand-intro-section" class="container mx-auto max-w-6xl px-6 py-20 text-center space-y-12">
                 <div id="brand-intro-text-wrapper" class="scroll-reveal">
                     <h2 class="text-3xl md:text-4xl font-bold mb-4 text-brand-main">브랜드 소개</h2>
                     <p id="brand-intro-text" class="text-base md:text-lg text-brand-main/80 leading-relaxed text-center">
@@ -207,7 +217,7 @@
                 </div>
             </section>
 
-                <section class="py-24 bg-white">
+                <section id="character-intro-section" class="py-24 bg-white">
     <div class="container mx-auto max-w-7xl px-6 space-y-20">
         <h2 class="text-4xl font-bold mb-0 scroll-reveal text-brand-main text-center">우리의 친구들</h2>
         
@@ -244,11 +254,11 @@
             <div class="text-left md:order-first md:col-span-3">
                 <h3 class="text-4xl font-bold mb-4 text-brand-main">루나 | Luna</h3>
                 <div class="flex flex-wrap gap-2 mb-6">
-                    <span class="char-hashtag">#무뚝뚝</span>
-                    <span class="char-hashtag">#경계심많음</span>
-                    <span class="char-hashtag">#사실은외로워</span>
-                    <span class="char-hashtag">#야광고양이</span>
-                    <span class="char-hashtag">#푸른하트</span>
+                    <span class="char-hashtag luna-hashtag">#무뚝뚝</span>
+                    <span class="char-hashtag luna-hashtag">#경계심많음</span>
+                    <span class="char-hashtag luna-hashtag">#사실은외로워</span>
+                    <span class="char-hashtag luna-hashtag">#야광고양이</span>
+                    <span class="char-hashtag luna-hashtag">#푸른하트</span>
                 </div>
                 <div class="story-scroll-box h-60 pr-3 space-y-4 text-brand-main/80 leading-relaxed">
                     <p>
@@ -263,7 +273,7 @@
                 </div>
             </div>
             <div class="flex justify-center md:order-last md:col-span-2">
-                 <div class="bg-brand-sub p-6 rounded-full w-64 h-64 md:w-80 md:h-80 mx-auto flex items-center justify-center overflow-hidden">
+                 <div class="luna-bg p-6 rounded-full w-64 h-64 md:w-80 md:h-80 mx-auto flex items-center justify-center overflow-hidden">
                      <img src="images/루나_V3.png" alt="루나" class="w-full h-full object-cover rounded-full">
                 </div>
             </div>
@@ -338,15 +348,13 @@
                         <h2 class="text-4xl font-bold text-brand-main">책상 위의 작은 숲</h2>
                         <p class="text-lg text-brand-main/80 mt-2">일상의 모든 순간을 루디, 루나와 함께 기록해보세요. 오늘 뭐해야 되지? 내일 뭐하지? 고민을 작성하고 하나씩 해치워보기!</p>
                     </div>
-                    <div class="relative bg-white rounded-2xl p-8 h-[500px] shadow-inner">
+                    <div class="relative bg-white rounded-2xl p-8 h-[650px] shadow-inner">
                         <a href="#" class="absolute top-1/4 left-[10%] w-1/3 transform -rotate-6 transition duration-300 hover:scale-105 hover:shadow-xl hover:-rotate-3">
                             <img src="images/파푸파푸_투두리스트_메모지.png" alt="투두리스트" class="w-full rounded-lg shadow-lg">
                         </a>
                         <a href="#" class="absolute top-[15%] right-[15%] w-[40%] transform rotate-3 transition duration-300 hover:scale-105 hover:shadow-xl hover:rotate-1">
                             <img src="images/파푸파푸_메모지.png" alt="메모지" class="w-full rounded-lg shadow-lg">
                         </a>
-                        <div class="absolute bottom-[10%] left-[20%] text-4xl transform -rotate-12 text-brand-main opacity-50">✏️</div>
-                        <div class="absolute bottom-[15%] right-[10%] text-3xl text-brand-main opacity-60">📎</div>
                     </div>
                 </div>
             </section>
@@ -691,6 +699,26 @@
                 });
             }
 
+            // --- 내비게이션 링크 부드러운 스크롤 (위치 조정) ---
+            document.querySelectorAll('header nav a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+
+                    const targetId = this.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+
+                    if (targetElement) {
+                        const header = document.querySelector('header');
+                        const headerHeight = header ? header.offsetHeight : 0;
+                        const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - headerHeight;
+
+                        window.scrollTo({
+                            top: targetPosition,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
     </script>
 </body>
 </html>
