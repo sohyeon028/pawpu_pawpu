@@ -7,7 +7,6 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap">
     <script>
-        
         tailwind.config = {
             theme: {
                 extend: {
@@ -16,147 +15,49 @@
                         'brand-emphasis': '#FFB78C',
                         'brand-sub': '#FFE0C9',
                         'brand-bg': '#FFFBF7', 
+                        'kakaotalk-bg': '#e1eef5', 
                     }
                 }
             }
         }
     </script>
     <style>
-        body {
-            font-family: 'Noto Sans KR', sans-serif;
-        }
-        /* 기존 스크롤 리빌 효과 */
+        body { font-family: 'Noto Sans KR', sans-serif; }
+        .h-dvh-safe { height: 100vh; height: 100dvh; }
         .scroll-reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease-out, transform 0.8s ease-out; }
         .scroll-reveal.visible { opacity: 1; transform: translateY(0); }
-        
-        /* [1. 메신저 섹션 크기 확대] */
-        .chat-bubble { 
-            padding: 16px 24px; /* 패딩 증가 */ 
-            border-radius: 20px; 
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); 
-            position: relative; 
-            font-size: 1.125rem; /* text-lg에 해당 */
-        }
+        .chat-bubble { padding: 20px 28px; border-radius: 20px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); position: relative; font-size: 1.25rem; }
         .chat-theirs { background-color: #ffffff; color: #333; align-self: flex-start; border-bottom-left-radius: 4px; }
         .chat-mine { background-color: #ffe600; color: #3c1e1e; align-self: flex-end; border-bottom-right-radius: 4px; }
-
-        /* [3. 브랜드 소개글 줄별 애니메이션을 위한 스타일] */
-        .intro-line { 
-            display: block; /* 한 줄씩 나오게 하기 위해 block으로 설정 */
-            opacity: 0; 
-            transform: translateY(10px); 
-            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-        }
-        .intro-line.visible { 
-            opacity: 1; 
-            transform: translateY(0); 
-        }
-
+        .intro-line { display: block; opacity: 0; transform: translateY(10px); transition: opacity 0.6s ease-out, transform 0.6s ease-out; }
+        .intro-line.visible { opacity: 1; transform: translateY(0); }
         header { position: fixed; top: 0; left: 0; right: 0; z-index: 50; background-color: rgba(255, 251, 247, 0.8); backdrop-filter: blur(10px); transition: background-color 0.3s, box-shadow 0.3s; }
         .expression-thumb { transition: transform 0.2s ease, box-shadow 0.2s ease; }
-        .expression-thumb:hover { transform: scale(1.1); box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
-        .char-tab { transition: background-color 0.3s, color 0.3s; }
-        .char-tab.active { background-color: #8C6B5E; color: white; }
-        .poll-option:not(.voted):hover img { transform: scale(1.05); }
-        .poll-option:not(.voted):hover .poll-name { color: #FFB78C; }
-        .poll-option.voted { cursor: default; }
-        .poll-option.voted:not(.selected) img { filter: grayscale(80%); opacity: 0.7; transition: filter 0.5s, opacity 0.5s; }
-        
-        #hero-text::after {
-            content: '|';
-            margin-left: 0.5rem;
-            animation: blink-caret .75s step-end infinite;
-        }
-        @keyframes blink-caret {
-            from, to { opacity: 1; }
-            50% { opacity: 0; }
-        }
-        #hero-text.typing-done::after {
-            animation: none;
-            content: ''; /* 타이핑 완료 후 커서 제거 */
-        }
-
-        .content-wrapper {
-            position: relative;
-            z-index: 10;
-            background-color: #FFFBF7; 
-        }
-
-        /* --- 캐릭터 탭 스타일 --- */
-        .char-tab-btn {
-            border-color: #FFE0C9; /* brand-sub */
-            background-color: white;
-        }
-        .char-tab-btn:hover {
-            background-color: #FFFBF7; /* brand-bg */
-        }
-        .char-tab-btn.active {
-            border-color: #8C6B5E; /* brand-main */
-            background-color: #FFFBF7; /* brand-bg */
-            box-shadow: 0 4px 10px rgba(140, 107, 94, 0.1);
-        }
-
-        /* --- 캐릭터 콘텐츠 패널 페이드인/아웃 --- */
-        .char-content-panel {
-            transition: opacity 0.4s ease-out, transform 0.4s ease-out;
-        }
-        /* JS로 hidden 클래스 제거 시 애니메이션 */
-        .char-content-panel:not(.hidden) {
-            animation: fadeIn 0.5s forwards;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* --- 캐릭터 해시태그 스타일 --- */
-        .char-hashtag {
-            display: inline-block;
-            background-color: #FFE0C9; /* brand-sub */
-            color: #8C6B5E; /* brand-main */
-            padding: 6px 14px;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            font-weight: 500;
-        }
-
-        /* --- 루나 전용 스타일 --- */
-        .luna-hashtag {
-            background-color: #E6E0F8; /* 연보라색 */
-            color: #5D5470; /* 어두운 보라색 텍스트 */
-        }
-        .luna-bg {
-            background-color: #bcb2da; /* 연보라색 */
-        }
-
-
-        /* --- 스토리 스크롤 박스 스타일 --- */
-        .story-scroll-box {
-            overflow-y: auto;
-            /* (선택) 스크롤바 디자인 */
-            scrollbar-width: thin; /* Firefox */
-            scrollbar-color: #FFB78C #FFFBF7; /* brand-emphasis / brand-bg */
-        }
-        /* (선택) Webkit 브라우저(크롬, 사파리) 스크롤바 디자인 */
-        .story-scroll-box::-webkit-scrollbar {
-            width: 8px;
-        }
-        .story-scroll-box::-webkit-scrollbar-track {
-            background: #FFFBF7; /* brand-bg */
-            border-radius: 10px;
-        }
-        .story-scroll-box::-webkit-scrollbar-thumb {
-            background-color: #FFB78C; /* brand-emphasis */
-            border-radius: 10px;
-        }
-
+        .expression-thumb:hover { transform: scale(1.05); box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        .char-hashtag { display: inline-block; background-color: #FFE0C9; color: #8C6B5E; padding: 6px 14px; border-radius: 20px; font-size: 0.9rem; font-weight: 500; transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); cursor: default; }
+        .char-hashtag:not(.luna-hashtag):hover { background-color: #FFB78C; color: white; transform: translateY(-3px) scale(1.1); box-shadow: 0 4px 10px rgba(255, 183, 140, 0.5); }
+        .luna-hashtag { background-color: #E6E0F8; color: #5D5470; }
+        .luna-hashtag:hover { background-color: #A390D6; color: white; transform: translateY(-3px) scale(1.1); box-shadow: 0 4px 10px rgba(163, 144, 214, 0.5); }
+        .luna-bg { background-color: #bcb2da; }
+        .story-scroll-box { overflow-y: auto; scrollbar-width: thin; scrollbar-color: #FFB78C #FFFBF7; }
+        .story-scroll-box::-webkit-scrollbar { width: 8px; }
+        .story-scroll-box::-webkit-scrollbar-track { background: #FFFBF7; border-radius: 10px; }
+        .story-scroll-box::-webkit-scrollbar-thumb { background-color: #FFB78C; border-radius: 10px; }
+        #hero-text::after { content: '|'; margin-left: 0.5rem; animation: blink-caret .75s step-end infinite; }
+        @keyframes blink-caret { from, to { opacity: 1; } 50% { opacity: 0; } }
+        #hero-text.typing-done::after { animation: none; content: ''; }
+        .content-wrapper { position: relative; z-index: 10; background-color: #FFFBF7; }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
+        .animate-float { animation: float 6s ease-in-out infinite; }
+        .delay-1000 { animation-delay: 1s; } 
+        .delay-2000 { animation-delay: 2s; }
     </style>
 </head>
 <body class="bg-brand-bg text-brand-main">
 
     <header class="w-full border-b border-brand-sub">
         <nav class="container mx-auto px-6 py-6 flex justify-between items-center max-w-7xl">
-            <a href="#" class="flex items-center">
+            <a href="#" class="flex items-center" aria-label="파푸파푸 홈으로 이동">
                 <img src="images/파푸파푸 로고.png" alt="브랜드 로고" class="h-20">
             </a>
             <div class="hidden md:flex items-center space-x-10 font-semibold text-lg">
@@ -167,17 +68,17 @@
                 <a href="#poll-section" class="hover:text-brand-emphasis transition-colors">고객센터</a>
             </div>
             <div class="md:hidden">
-                <button class="text-brand-main">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                <button class="text-brand-main" aria-label="모바일 메뉴 열기">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
                 </button>
             </div>
         </nav>
     </header>
 
     <main>
-        <section id="hero-section" class="sticky top-0 w-full h-screen overflow-hidden">
+        <section id="hero-section" class="sticky top-0 w-full h-dvh-safe overflow-hidden">
             <div id="hero-content" class="relative w-full h-full">
-                <img src="images/히어로.gif" alt="캐릭터 GIF" class="absolute top-0 left-0 w-full h-full object-cover z-0">
+                <img src="images/클로버 gif.gif" alt="캐릭터 GIF" class="absolute top-0 left-0 w-full h-full object-cover z-0">
                 <div class="absolute top-0 left-0 w-full h-full bg-black bg-opacity-30 z-10"></div>
                 <div class="relative z-20 h-full flex items-center justify-center text-white px-6">
                     <h1 id="hero-text" class="text-4xl md:text-5xl lg:text-6xl font-bold" style="text-shadow: 2px 2px 8px rgba(0,0,0,0.6);"></h1>
@@ -186,7 +87,7 @@
         </section>
 
         <div class="content-wrapper">
-            <section class="py-24 bg-slate-100">
+            <section class="py-16 bg-kakaotalk-bg">
                 <div id="chat-container" class="container mx-auto max-w-2xl flex flex-col space-y-12 px-4">
                     <div class="chat-bubble chat-theirs scroll-reveal w-fit"><p>너 파푸파푸라는 캐릭터 브랜드 알아?</p></div>
                     <div class="chat-bubble chat-mine scroll-reveal w-fit"><p>아니? 처음 들어봐</p></div>
@@ -198,89 +99,76 @@
                 </div>
             </section>
 
-            <section id="brand-intro-section" class="container mx-auto max-w-6xl px-6 py-20 text-center space-y-12">
+            <section id="brand-intro-section" class="container mx-auto max-w-6xl px-6 pt-64 pb-4 text-center">
                 <div id="brand-intro-text-wrapper" class="scroll-reveal">
                     <h2 class="text-3xl md:text-4xl font-bold mb-4 text-brand-main">브랜드 소개</h2>
-                    <p id="brand-intro-text" class="text-base md:text-lg text-brand-main/80 leading-relaxed text-center">
+                    <p id="brand-intro-text" class="text-base md:text-lg text-brand-main/90 leading-relaxed text-center mt-12">
                         <span class="intro-line">누구나 마음속에 빛바랜 추억, 잠시 접어둔 꿈 하나쯤은 품고 살아갑니다.</span>
                         <span class="intro-line">시간에 무뎌지고 현실에 치여, 한때는 전부였던 그 소중한 마음으로 가는 길을 잃어버리기도 하죠.</span>
                         <span class="intro-line">자신의 빛이 저주라 믿었던 강아지 루디, 상처 때문에 마음의 문을 닫았던 고양이 루나.</span>
                         <span class="intro-line">혼자였다면 어둠 속에 머물렀을 두 친구는, 서로의 빛과 온기에 기대어 함께 길을 나섭니다.</span>
                         <span class="intro-line">그들의 여정은 잃어버린 것을 되찾는 여정인 동시에, 자신의 상처가 누군가를 치유하는 희망이 될 수 있음을 깨닫는 과정입니다.</span>
                         <span class="intro-line">저희의 목표는 단지 귀여운 캐릭터를 만드는 것이 아닙니다.</span>
-                        <span class="intro-line">당신의 Ss삶이라는 여정 속에서 잠시 길을 잃었다고 느낄 때, 추억을 되새기며 작은 위로와 휴식을 취할 수 있는 ‘나만의 숲’이 되는 것입니다.</span>
+                        <span class="intro-line">당신의 삶이라는 여정 속에서 잠시 길을 잃었다고 느낄 때, 추억을 되새기며 작은 위로와 휴식을 취할 수 있는 ‘나만의 숲’이 되는 것입니다.</span>
                         <span class="intro-line">루디와 친구들의 발자국을 따라, 당신의 가장 따뜻했던 순간으로 함께 떠나보세요.</span>
                     </p>
                 </div>
-                <div class="scroll-reveal max-w-2xl mx-auto overflow-hidden">
+                <div class="relative max-w-2xl mx-auto mt-20 scroll-reveal">
                     <img src="images/파푸파푸_소개_일러스트.png" alt="캐릭터 일러스트" class="w-full h-auto object-cover">
                 </div>
             </section>
 
-                <section id="character-intro-section" class="py-24 bg-white">
-    <div class="container mx-auto max-w-7xl px-6 space-y-20">
-        <h2 class="text-4xl font-bold mb-0 scroll-reveal text-brand-main text-center">우리의 친구들</h2>
-        
-        <div class="grid grid-cols-1 md:grid-cols-5 gap-12 items-center scroll-reveal">
-            <div class="flex justify-center md:col-span-2">
-                <div class="bg-brand-sub p-6 rounded-full w-64 h-64 md:w-80 md:h-80 mx-auto flex items-center justify-center overflow-hidden">
-                     <img src="images/루디_V3.png" alt="루디" class="w-full h-full object-cover rounded-full">
-                </div>
-            </div>
-            <div class="text-left md:col-span-3">
-                <h3 class="text-4xl font-bold mb-4 text-brand-main">루디 | Roody</h3>
-                <div class="flex flex-wrap gap-2 mb-6">
-                    <span class="char-hashtag">#호기심왕성</span>
-                    <span class="char-hashtag">#긍정적인편</span>
-                    <span class="char-hashtag">#혼자는싫어</span>
-                    <span class="char-hashtag">#불타는귀</span>
-                    <span class="char-hashtag">#하트발바닥</span>
-                </div>
-                <div class="story-scroll-box h-60 pr-3 space-y-4 text-brand-main/80 leading-relaxed">
-                    <p>
-                        어두운 공간에서는 가족들은 손발바닥에 빛이 안 나지만, 루디의 손발바닥에는 빛이나 ‘천적들에게 위치가 공개될 위험에 처해진다’라는 이유로 숲에 홀로 서게 되었다.
-                    </p>
-                    <p>
-                        해가 져 어두운 밤이 되었을 때, 숲을 거닐다 ㅇㅇㅇ하는 고양이를 만났다. 그 고양이는 ‘루나’다. 혼자 있는 것을 싫어하여 루나에게 함께 지내자 권유했으나 단칼에 거절을 당했다.
-                    </p>
-                    <p>
-                        허나, 루디가 몇 걸음 걸어가니 루나는 생각이 바뀌었다며 권유를 받아들였다. 그렇게 두 친구들에게 긴 여정이 시작되었고, 루디는 많은 이들에게 빛나는 이정표가 되어주기 시작한다.
-                    </p>
-                </div>
-            </div>
-        </div>
+            <section id="character-intro-section" class="py-24 bg-white">
+                <div class="container mx-auto max-w-7xl px-6 space-y-20">
+                    <h2 class="text-4xl font-bold mb-0 scroll-reveal text-brand-main text-center">우리의 친구들</h2>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-5 gap-12 items-center scroll-reveal">
+                        <div class="flex justify-center md:col-span-2">
+                            <div class="bg-brand-sub p-6 rounded-full w-64 h-64 md:w-80 md:h-80 mx-auto flex items-center justify-center overflow-hidden">
+                                 <img src="images/루디_V3.png" alt="루디" class="w-full h-full object-cover rounded-full">
+                            </div>
+                        </div>
+                        <div class="text-left md:col-span-3">
+                            <h3 class="text-4xl font-bold mb-4 text-brand-main">루디 | Roody</h3>
+                            <div class="flex flex-wrap gap-2 mb-6">
+                                <span class="char-hashtag">#호기심왕성</span>
+                                <span class="char-hashtag">#긍정적인편</span>
+                                <span class="char-hashtag">#혼자는싫어</span>
+                                <span class="char-hashtag">#불타는귀</span>
+                                <span class="char-hashtag">#하트발바닥</span>
+                            </div>
+                            <div class="story-scroll-box h-60 pr-3 space-y-4 text-brand-main/90 leading-relaxed">
+                                <p>어두운 공간에서는 가족들은 손발바닥에 빛이 안 나지만, 루디의 손발바닥에는 빛이나 ‘천적들에게 위치가 공개될 위험에 처해진다’라는 이유로 숲에 홀로 서게 되었다.</p>
+                                <p>해가 져 어두운 밤이 되었을 때, 숲을 거닐다 ㅇㅇㅇ하는 고양이를 만났다. 그 고양이는 ‘루나’다. 혼자 있는 것을 싫어하여 루나에게 함께 지내자 권유했으나 단칼에 거절을 당했다.</p>
+                                <p>허나, 루디가 몇 걸음 걸어가니 루나는 생각이 바뀌었다며 권유를 받아들였다. 그렇게 두 친구들에게 긴 여정이 시작되었고, 루디는 많은 이들에게 빛나는 이정표가 되어주기 시작한다.</p>
+                            </div>
+                        </div>
+                    </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-5 gap-12 items-center scroll-reveal">
-            <div class="text-left md:order-first md:col-span-3">
-                <h3 class="text-4xl font-bold mb-4 text-brand-main">루나 | Luna</h3>
-                <div class="flex flex-wrap gap-2 mb-6">
-                    <span class="char-hashtag luna-hashtag">#무뚝뚝</span>
-                    <span class="char-hashtag luna-hashtag">#경계심많음</span>
-                    <span class="char-hashtag luna-hashtag">#사실은외로워</span>
-                    <span class="char-hashtag luna-hashtag">#야광고양이</span>
-                    <span class="char-hashtag luna-hashtag">#푸른하트</span>
+                    <div class="grid grid-cols-1 md:grid-cols-5 gap-12 items-center scroll-reveal">
+                        <div class="text-left md:order-first md:col-span-3">
+                            <h3 class="text-4xl font-bold mb-4 text-brand-main">루나 | Luna</h3>
+                            <div class="flex flex-wrap gap-2 mb-6">
+                                <span class="char-hashtag luna-hashtag">#무뚝뚝</span>
+                                <span class="char-hashtag luna-hashtag">#경계심많음</span>
+                                <span class="char-hashtag luna-hashtag">#사실은외로워</span>
+                                <span class="char-hashtag luna-hashtag">#야광고양이</span>
+                                <span class="char-hashtag luna-hashtag">#푸른하트</span>
+                            </div>
+                            <div class="story-scroll-box h-60 pr-3 space-y-4 text-brand-main/90 leading-relaxed">
+                                <p>숲에는 루나 말고도 다른 고양이가 있었다. 루나와는 가족처럼 지내며, 오래 함께할 것이라 믿은 친구가 갑작기 떠나버렸다.</p>
+                                <p>어느날, 해가 져 어두워진 숲에서 우연히 손발바닥이 빛나는 강아지 '루디'를 만났다. 낯선 존재에 대한 경계심과, 다시 누군가와 가까워지는 것이 두려워 함께 지내자는 루디의 권유를 단칼에 거절했다.</p>
+                                <p>하지만, 등을 돌려 멀어지는 루디의 오렌지 빛 발자국이 어둠 속에 갇힌 자신을 구원해 줄 유일한 희망임을 직감하고, 그녀는 인생에서 두번째로 누군가와 함께 걷기로 결심하며 권유를 받아들였다. </p>
+                            </div>
+                        </div>
+                        <div class="flex justify-center md:order-last md:col-span-2">
+                             <div class="luna-bg p-6 rounded-full w-64 h-64 md:w-80 md:h-80 mx-auto flex items-center justify-center overflow-hidden">
+                                 <img src="images/루나_V3.png" alt="루나" class="w-full h-full object-cover rounded-full">
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="story-scroll-box h-60 pr-3 space-y-4 text-brand-main/80 leading-relaxed">
-                    <p>
-                        숲에는 루나 말고도 다른 고양이가 있었다. 루나와는 가족처럼 지내며, 오래 함께할 것이라 믿은 친구가 갑작기 떠나버렸다.
-                    </p>
-                    <p>
-                        어느날, 해가 져 어두워진 숲에서 우연히 손발바닥이 빛나는 강아지 '루디'를 만났다. 낯선 존재에 대한 경계심과, 다시 누군가와 가까워지는 것이 두려워 함께 지내자는 루디의 권유를 단칼에 거절했다.
-                    </p>
-                    <p>
-                        하지만, 등을 돌려 멀어지는 루디의 오렌지 빛 발자국이 어둠 속에 갇힌 자신을 구원해 줄 유일한 희망임을 직감하고, 그녀는 인생에서 두번째로 누군가와 함께 걷기로 결심하며 권유를 받아들였다. 
-                    </p>
-                </div>
-            </div>
-            <div class="flex justify-center md:order-last md:col-span-2">
-                 <div class="luna-bg p-6 rounded-full w-64 h-64 md:w-80 md:h-80 mx-auto flex items-center justify-center overflow-hidden">
-                     <img src="images/루나_V3.png" alt="루나" class="w-full h-full object-cover rounded-full">
-                </div>
-            </div>
-        </div>
-
-    </div>
-</section>
+            </section>
             
             <section class="py-20 bg-brand-bg">
                  <div class="container mx-auto px-6 max-w-7xl">
@@ -309,7 +197,7 @@
                 <div class="container mx-auto max-w-7xl px-6 scroll-reveal">
                     <div class="text-center mb-12">
                         <h2 class="text-4xl font-bold text-brand-main">여러분의 일상에 쏘옥!</h2>
-                        <p class="text-lg text-brand-main/80 mt-2">파푸파푸 친구들과 함께하는 포근한 하루</p>
+                        <p class="text-lg text-brand-main/90 mt-2">파푸파푸 친구들과 함께하는 포근한 하루</p>
                     </div>
                     <div class="grid md:grid-cols-2 gap-12 items-center">
                         <div class="bg-white rounded-lg flex items-center justify-center p-8 shadow-sm">
@@ -322,31 +210,37 @@
                             <div id="expression-grid" class="grid grid-cols-2 gap-4 max-w-[220px]"></div>
                             <div class="mt-8">
                                 <h3 class="text-2xl font-bold text-brand-main">파푸파푸 표정 반팔 티셔츠</h3>
-                                <p class="text-brand-main/80 mt-2">오늘은 어떤 기분인가요?<br>귀여운 캐릭터 표정으로 당신의 하루를 표현해보세요.</p>
-                                <button class="mt-6 bg-brand-emphasis text-white font-bold py-3 px-8 rounded-lg hover:opacity-90 transition-opacity">자세히 보기</button>
+                                <p class="text-brand-main/90 mt-2">오늘은 어떤 기분인가요?<br>귀여운 캐릭터 표정으로 당신의 하루를 표현해보세요.</p>
+                                <button class="mt-6 bg-brand-emphasis text-white font-bold py-3 px-8 rounded-lg hover:opacity-90 transition-opacity" aria-label="티셔츠 자세히 보기">자세히 보기</button>
                             </div>
                         </div>
                     </div>
                 </div>
+
                 <div class="container mx-auto max-w-7xl px-6 scroll-reveal">
-                     <div class="relative rounded-2xl overflow-hidden bg-brand-main p-12 md:p-20 flex items-center h-[500px]">
-                        <img src="https://placehold.co/1200x500/FFE0C9/ffffff?text=배경+이미지" class="absolute inset-0 w-full h-full object-cover opacity-20">
-                        <div class="relative z-10 grid md:grid-cols-2 gap-12 items-center">
-                            <div class="text-center md:text-left">
-                                <h2 class="text-4xl font-bold text-white leading-tight">어디든 함께하는 단짝</h2>
-                                <p class="text-lg text-gray-200 mt-4">책, 노트북, 작은 소지품까지.<br>파푸파푸 에코백에 당신의 하루를 담아보세요.</p>
-                                 <button class="mt-8 bg-brand-emphasis text-white font-bold py-3 px-8 rounded-lg hover:opacity-90 transition-opacity">상품 보러가기</button>
-                            </div>
-                            <div class="flex justify-center">
-                                <img src="images/파푸파푸_에코백_목업.png" alt="에코백" class="w-64 md:w-80 transform transition duration-500 hover:scale-105">
-                            </div>
+                    <div class="grid md:grid-cols-2 gap-12 items-center">
+                         <div class="flex items-center justify-end md:order-last">
+                            <img src="images/파푸파푸_에코백_목업.png" alt="파푸파푸 에코백" class="max-w-[65%] h-auto">
+                        </div>
+                        <div class="md:order-first">
+                            <h3 class="text-3xl font-bold text-brand-main">루디와 루나의 에코백</h3>
+                            <p class="text-brand-main/90 mt-3 text-lg leading-relaxed">
+                                루디와 루나가 꿈을 응원하는 메시지를 담았어요. 가볍고 튼튼한 에코백과 함께 매일매일 새로운 꿈을 향해 발을 내딛어 보세요.
+                            </p>
+                            <ul class="mt-6 space-y-2 text-brand-main/80">
+                                <li class="flex items-center"><svg class="w-5 h-5 mr-2 text-brand-emphasis" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> 100% 면 소재 (친환경)</li>
+                                <li class="flex items-center"><svg class="w-5 h-5 mr-2 text-brand-emphasis" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> 루디/루나 응원 메시지 프린팅</li>
+                                <li class="flex items-center"><svg class="w-5 h-5 mr-2 text-brand-emphasis" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> 넉넉한 수납공간 (A4 가능)</li>
+                            </ul>
+                            <button class="mt-8 bg-brand-emphasis text-white font-bold py-3 px-8 rounded-lg hover:opacity-90 transition-opacity" aria-label="에코백 구매하기">구매하기</button>
                         </div>
                     </div>
                 </div>
+
                 <div class="container mx-auto max-w-7xl px-6 scroll-reveal">
                     <div class="text-center mb-12">
                         <h2 class="text-4xl font-bold text-brand-main">책상 위의 작은 숲</h2>
-                        <p class="text-lg text-brand-main/80 mt-2">일상의 모든 순간을 루디, 루나와 함께 기록해보세요. 오늘 뭐해야 되지? 내일 뭐하지? 고민을 작성하고 하나씩 해치워보기!</p>
+                        <p class="text-lg text-brand-main/90 mt-2">일상의 모든 순간을 루디, 루나와 함께 기록해보세요. 오늘 뭐해야 되지? 내일 뭐하지? 고민을 작성하고 하나씩 해치워보기!</p>
                     </div>
                     <div class="relative bg-white rounded-2xl p-8 h-[650px] shadow-inner">
                         <a href="#" class="absolute top-1/4 left-[10%] w-1/3 transform -rotate-6 transition duration-300 hover:scale-105 hover:shadow-xl hover:-rotate-3">
@@ -363,34 +257,37 @@
                 <div class="container mx-auto max-w-7xl px-6 grid md:grid-cols-2 gap-12 items-center">
                     <div class="text-center md:text-left scroll-reveal">
                         <h2 class="text-4xl font-bold mb-4 text-brand-main">캐릭터 다이어리 앱</h2>
-                        <p class="text-xl text-brand-main/80 leading-relaxed">
+                        <p class="text-xl text-brand-main/90 leading-relaxed">
                             오늘 하루, 어떤 감정들을 만났나요?<br> 루디와 루나가 당신의 이야기에 귀를 기울여줄 거예요.<br> '나만의 숲'에서 소중한 순간들을 차곡차곡 쌓아보세요.
                         </p>
                     </div>
                     
-                    <div class="scroll-reveal flex items-center justify-center min-h-[550px]">
-                        <div class="relative w-full h-[550px] group">
+                    <div class="scroll-reveal flex items-center justify-center min-h-[600px]">
+                        <div class="relative w-full max-w-[900px] h-[600px] group flex justify-center items-center cursor-pointer">
                             
-                            <img src="https://placehold.co/270x540/FFE0C9/8C6B5E?text=앱+UI+1" 
+                            <img src="images/Shot2.png" 
                                  alt="다이어리 앱 UI 1" 
-                                 class="absolute top-0 left-[5%] w-[270px] h-[540px] object-cover rounded-2xl shadow-2xl transform 
-                                        -rotate-3 transition-all duration-300 ease-in-out z-10
-                                        group-hover:rotate-[-6deg] group-hover:scale-105 group-hover:translate-x-[-10%]">
+                                 class="absolute w-[280px] md:w-[300px] h-auto object-contain rounded-[2.5rem] drop-shadow-2xl
+                                        transform scale-90 -rotate-6 translate-x-[-20px] z-10 opacity-80
+                                        transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)]
+                                        group-hover:translate-x-[-240px] group-hover:rotate-[-15deg] group-hover:scale-100 group-hover:opacity-100 group-hover:z-20">
                             
-                            <img src="https://placehold.co/270x540/FFB78C/8C6B5E?text=앱+UI+2" 
-                                 alt="다이어리 앱 UI 2" 
-                                 class="absolute top-0 left-1/2 -translate-x-1/2 w-[270px] h-[540px] object-cover rounded-2xl shadow-2xl 
-                                        transform transition-all duration-300 ease-in-out z-20
-                                        group-hover:scale-110 group-hover:-translate-y-2">
-            
-                            <img src="https://placehold.co/270x540/FFFBF7/8C6B5E?text=앱+UI+3" 
+                            <img src="images/Shot3.png" 
                                  alt="다이어리 앱 UI 3" 
-                                 class="absolute top-0 right-[5%] w-[270px] h-[540px] object-cover rounded-2xl shadow-2xl transform 
-                                        rotate-3 transition-all duration-300 ease-in-out z-10
-                                        group-hover:rotate-[6deg] group-hover:scale-105 group-hover:translate-x-[10%]">
+                                 class="absolute w-[280px] md:w-[300px] h-auto object-contain rounded-[2.5rem] drop-shadow-2xl
+                                        transform scale-90 rotate-6 translate-x-[20px] z-10 opacity-80
+                                        transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)]
+                                        group-hover:translate-x-[240px] group-hover:rotate-[15deg] group-hover:scale-100 group-hover:opacity-100 group-hover:z-20">
+
+                            <img src="images/Shot1.png" 
+                                 alt="다이어리 앱 UI 2" 
+                                 class="absolute w-[300px] md:w-[320px] h-auto object-contain rounded-[2.5rem] drop-shadow-2xl
+                                        transform z-30
+                                        transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)]
+                                        group-hover:scale-105 group-hover:-translate-y-4">
                         </div>
                     </div>
-                    </div>
+                </div>
             </section>
 
             <section id="poll-section" class="py-24 bg-brand-sub">
@@ -420,6 +317,10 @@
             </section>
         </div>
     </main>
+    
+    <button id="scrollToTopBtn" class="fixed bottom-6 right-6 p-4 rounded-full bg-brand-emphasis text-white shadow-xl transition-opacity duration-300 opacity-0 z-50 hover:bg-brand-main" aria-label="맨 위로 이동" style="pointer-events: none;">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path></svg>
+    </button>
 
     <footer class="bg-brand-main text-white">
         <div class="container mx-auto max-w-7xl px-6 py-12">
@@ -440,14 +341,13 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             
-            // --- 1. 일반 스크롤 애니메이션 (`scroll-reveal`) 반복 적용 ---
+            // --- 1. 일반 스크롤 애니메이션 (`scroll-reveal`) ---
             const scrollElements = document.querySelectorAll('.scroll-reveal');
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => { 
                     if (entry.isIntersecting) {
                         entry.target.classList.add('visible');
                     } else {
-                        // 뷰포트에서 벗어나면 애니메이션 초기화 (반복 적용을 위해)
                         entry.target.classList.remove('visible'); 
                     }
                 });
@@ -462,14 +362,14 @@
                 header.style.backgroundColor = isScrolled ? 'rgba(255, 251, 247, 0.95)' : 'rgba(255, 251, 247, 0.8)';
             });
 
-            // --- 3. 히어로 텍스트 타이핑 반복 효과 ---
+            // --- 2. 히어로 텍스트 타이핑 ---
             const heroTextElement = document.getElementById('hero-text');
             const heroSection = document.getElementById('hero-section');
             const textToType = "귀여운 발자국을 남기는\n사랑스러운 우리의 친구";
 
             function typeWriter() {
                 let i = 0;
-                heroTextElement.innerHTML = ""; // 초기화
+                heroTextElement.innerHTML = ""; 
                 heroTextElement.classList.remove('typing-done');
 
                 function typeLoop() {
@@ -481,37 +381,29 @@
                             heroTextElement.innerHTML += char;
                         }
                         i++;
-                        // 타이핑 중에만 커서가 깜빡이도록 처리
                         if(heroTextElement.classList.contains('typing-done')) {
                              heroTextElement.classList.remove('typing-done');
                         }
                         setTimeout(typeLoop, 120); 
                     } else {
-                        heroTextElement.classList.add('typing-done'); // 완료 후 커서 제거
+                        heroTextElement.classList.add('typing-done'); 
                     }
                 }
                 typeLoop();
             }
 
-            // 히어로 섹션이 뷰포트에 들어올 때만 타이핑 시작/반복
             const typeWriterObserver = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting && heroTextElement) {
                         typeWriter();
-                        // 텍스트가 이미 보이고 있다면, 반복하지 않도록 unobserve 할 수도 있지만, 
-                        // 사용자가 반복을 원했으므로 항상 들어올 때마다 typeWriter를 호출합니다.
-                    } else if (heroTextElement) {
-                        // 뷰포트에서 벗어날 때 타이핑 중단 및 초기화 (선택 사항)
-                        // 여기서는 타이핑 완료 상태만 유지
-                        // heroTextElement.innerHTML = "";
                     }
                 });
-            }, { threshold: 0.5 }); // 50% 이상 보일 때
+            }, { threshold: 0.5 }); 
             if (heroSection && heroTextElement) {
                 typeWriterObserver.observe(heroSection);
             }
 
-            // --- 새로운 히어로 스크롤 효과 (기존 로직 유지) ---
+            // --- 3. 히어로 스크롤 효과 ---
             const heroContent = document.getElementById('hero-content');
             if (heroSection && heroContent) {
                 window.addEventListener('scroll', () => {
@@ -529,14 +421,14 @@
                 });
             }
             
-            // --- 2. 채팅 메시지 순차적 표시 스크립트 (반복 적용 가능하도록 수정) ---
+            // --- 4. 채팅 메시지 순차적 표시 ---
             const chatContainer = document.getElementById('chat-container');
             if (chatContainer) {
                 const messages = chatContainer.querySelectorAll('.chat-bubble');
                 messages.forEach(msg => msg.classList.remove('visible'));
 
                 let chatIndex = 0;
-                let chatTimer = null; // 타이머 관리용
+                let chatTimer = null; 
 
                 const showMessagesSequentially = () => {
                     if (chatIndex < messages.length) {
@@ -548,12 +440,10 @@
 
                 const chatObserver = new IntersectionObserver((entries) => {
                     if(entries[0].isIntersecting) {
-                        // 진입: 순차적으로 표시 시작
-                        if (chatIndex === 0) { // 애니메이션이 완료되지 않았을 때만 시작
+                        if (chatIndex === 0) { 
                              showMessagesSequentially();
                         }
                     } else {
-                         // 이탈: 애니메이션 초기화
                          clearTimeout(chatTimer);
                          messages.forEach(msg => msg.classList.remove('visible'));
                          chatIndex = 0;
@@ -562,7 +452,7 @@
                 chatObserver.observe(chatContainer);
             }
 
-            // --- 2. 브랜드 소개글 줄별 순차 표시 스크립트 (반복 적용 가능하도록 수정) ---
+            // --- 5. 브랜드 소개글 줄별 순차 표시 ---
             const introTextWrapper = document.getElementById('brand-intro-text-wrapper');
             const introLines = document.querySelectorAll('#brand-intro-text .intro-line');
 
@@ -570,7 +460,7 @@
                 introLines.forEach(line => line.classList.remove('visible'));
 
                 let lineIndex = 0;
-                let introTimer = null; // 타이머 관리용
+                let introTimer = null; 
 
                 const showLinesSequentially = () => {
                     if (lineIndex < introLines.length) {
@@ -582,12 +472,10 @@
 
                 const introObserver = new IntersectionObserver((entries) => {
                     if (entries[0].isIntersecting) {
-                        // 진입: 순차적으로 표시 시작
-                        if (lineIndex === 0) { // 애니메이션이 완료되지 않았을 때만 시작
+                        if (lineIndex === 0) { 
                             showLinesSequentially();
                         }
                     } else {
-                         // 이탈: 애니메이션 초기화
                          clearTimeout(introTimer);
                          introLines.forEach(line => line.classList.remove('visible'));
                          lineIndex = 0;
@@ -597,10 +485,8 @@
                 });
                 introObserver.observe(introTextWrapper);
             }
-            // -------------------------------------------------------------------
 
-
-            // --- '인터랙티브 티셔츠' 스크립트 ---
+            // --- 7. 인터랙티브 티셔츠 ---
             const mainTshirtImage = document.getElementById('main-tshirt-image');
             const expressionGrid = document.getElementById('expression-grid');
             
@@ -621,29 +507,26 @@
             function loadExpressions() {
                 if (!expressionGrid || !mainTshirtImage) return;
                 expressionGrid.innerHTML = '';
-                const charData = imageData.rudy; // 캐릭터1(rudy) 데이터만 사용
+                const charData = imageData.rudy; 
                 
-                // [수정] HTML에 src가 이미 설정되어 있지만, JS 로직은 그대로 유지 (호버 기능 때문)
-                // mainTC:\Users\Sohyeon\Desktop\캐릭터 브랜드\images\루디_티셔츠1_목업.pngshirtImage.src = charData.default; 
-
                 charData.thumbs.forEach((thumbSrc, index) => {
                     const img = document.createElement('img');
                     img.src = thumbSrc;
                     img.alt = `rudy expression ${index + 1}`;
-                    img.className = 'expression-thumb cursor-pointer rounded-md w-full';
+                    // [변경 없음] 호버 시 테두리 색상으로 변경되는 클래스 유지
+                    img.className = 'expression-thumb cursor-pointer rounded-2xl w-full bg-white p-2 shadow-md border-2 border-transparent hover:border-brand-emphasis transition-all';
                     img.dataset.tshirtSrc = charData.expressions[index];
                     img.addEventListener('mouseover', () => { mainTshirtImage.src = img.dataset.tshirtSrc; });
                     expressionGrid.appendChild(img);
                 });
             }
 
-            loadExpressions(); // 페이지 로드 시 캐릭터1 표정 로드
+            loadExpressions(); 
 
-            // --- '최애 캐릭터 투표' 스크립트 (Firestore 사용 권장) ---
+            // --- 8. 최애 캐릭터 투표 ---
             const pollSection = document.getElementById('poll-section');
             if (pollSection) {
                 const pollOptions = pollSection.querySelectorAll('.poll-option');
-                // localStorage 대신 Firestore 사용이 권장되지만, 기존 로직 유지
                 let votes = JSON.parse(localStorage.getItem('pawpu_votes')) || { char1: 0, char2: 0 };
                 function updatePollResults(show) {
                     const totalVotes = Object.values(votes).reduce((s, c) => s + c, 0);
@@ -674,32 +557,8 @@
                     });
                 });
             }
-        });
 
-        // --- '캐릭터 소개' 탭 및 아코디언 스크립트 ---
-            const tabBtnRudy = document.getElementById('tab-btn-rudy');
-            const tabBtnLuna = document.getElementById('tab-btn-luna');
-            const contentRudy = document.getElementById('tab-content-rudy');
-            const contentLuna = document.getElementById('tab-content-luna');
-
-            if (tabBtnRudy && tabBtnLuna && contentRudy && contentLuna) {
-                // 탭 버튼 클릭 이벤트
-                tabBtnRudy.addEventListener('click', () => {
-                    tabBtnRudy.classList.add('active');
-                    tabBtnLuna.classList.remove('active');
-                    contentRudy.classList.remove('hidden');
-                    contentLuna.classList.add('hidden');
-                });
-
-                tabBtnLuna.addEventListener('click', () => {
-                    tabBtnLuna.classList.add('active');
-                    tabBtnRudy.classList.remove('active');
-                    contentLuna.classList.remove('hidden');
-                    contentRudy.classList.add('hidden');
-                });
-            }
-
-            // --- 내비게이션 링크 부드러운 스크롤 (위치 조정) ---
+            // --- 9. 내비게이션 링크 부드러운 스크롤 ---
             document.querySelectorAll('header nav a[href^="#"]').forEach(anchor => {
                 anchor.addEventListener('click', function (e) {
                     e.preventDefault();
@@ -719,6 +578,37 @@
                     }
                 });
             });
+
+            // --- 10. [추가] 상단 이동 버튼 (Scroll to Top) ---
+            const scrollToTopBtn = document.getElementById('scrollToTopBtn');
+            const scrollThreshold = 300; // 300px 이상 스크롤 시 버튼 표시
+
+            const handleScroll = () => {
+                if (!scrollToTopBtn) return;
+                // opacity와 pointer-events를 같이 조작하여 숨길 때 클릭 불가능하게 만듭니다.
+                if (window.scrollY > scrollThreshold) {
+                    scrollToTopBtn.style.opacity = '1';
+                    scrollToTopBtn.style.pointerEvents = 'auto'; 
+                } else {
+                    scrollToTopBtn.style.opacity = '0';
+                    scrollToTopBtn.style.pointerEvents = 'none'; 
+                }
+            };
+
+            const scrollToTop = () => {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            };
+
+            if (scrollToTopBtn) {
+                window.addEventListener('scroll', handleScroll);
+                scrollToTopBtn.addEventListener('click', scrollToTop);
+                // 페이지 로드 시 초기 상태 설정
+                handleScroll();
+            }
+        });
     </script>
 </body>
 </html>
