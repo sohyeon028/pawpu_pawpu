@@ -6,6 +6,8 @@
     <title>Pawpu-Pawpu</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap">
+    <link rel="stylesheet" href="style.css">
+    
     <script>
         tailwind.config = {
             theme: {
@@ -21,61 +23,16 @@
             }
         }
     </script>
-    <style>
-        body { font-family: 'Noto Sans KR', sans-serif; }
-        .h-dvh-safe { height: 100vh; height: 100dvh; }
-
-        /* --- 스크롤 애니메이션 정의 --- */
-        .scroll-reveal { 
-            opacity: 0; 
-            transition: opacity 0.8s ease-out, transform 0.8s ease-out; 
-            transform: translateY(30px); 
-        }
-        .scroll-reveal.from-left { transform: translateX(-50px); }
-        .scroll-reveal.from-right { transform: translateX(50px); }
-        .scroll-reveal.zoom-in { transform: scale(0.9); }
-        .scroll-reveal.rotate-in { transform: rotate(-10deg) scale(0.8); }
-        .scroll-reveal.visible { opacity: 1; transform: translate(0) scale(1) rotate(0); }
-
-        .chat-bubble { padding: 20px 28px; border-radius: 20px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); position: relative; font-size: 1.25rem; }
-        .chat-theirs { background-color: #ffffff; color: #333; align-self: flex-start; border-bottom-left-radius: 4px; }
-        .chat-mine { background-color: #ffe600; color: #3c1e1e; align-self: flex-end; border-bottom-right-radius: 4px; }
-        .intro-line { display: block; opacity: 0; transform: translateY(10px); transition: opacity 0.6s ease-out, transform 0.6s ease-out; }
-        .intro-line.visible { opacity: 1; transform: translateY(0); }
-        header { position: fixed; top: 0; left: 0; right: 0; z-index: 50; background-color: rgba(255, 251, 247, 0.8); backdrop-filter: blur(10px); transition: background-color 0.3s, box-shadow 0.3s; }
-        
-        .expression-thumb { transition: transform 0.2s ease, box-shadow 0.2s ease; }
-        .expression-thumb:hover { transform: scale(1.05); box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
-        
-        .char-hashtag { display: inline-block; background-color: #FFE0C9; color: #8C6B5E; padding: 6px 14px; border-radius: 20px; font-size: 0.9rem; font-weight: 500; transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); cursor: default; }
-        .char-hashtag:not(.luna-hashtag):hover { background-color: #FFB78C; color: white; transform: translateY(-3px) scale(1.1); box-shadow: 0 4px 10px rgba(255, 183, 140, 0.5); }
-        .luna-hashtag { background-color: #E6E0F8; color: #5D5470; }
-        .luna-hashtag:hover { background-color: #A390D6; color: white; transform: translateY(-3px) scale(1.1); box-shadow: 0 4px 10px rgba(163, 144, 214, 0.5); }
-        .luna-bg { background-color: #bcb2da; }
-        
-        .story-scroll-box { overflow-y: auto; scrollbar-width: thin; scrollbar-color: #FFB78C #FFFBF7; }
-        .story-scroll-box::-webkit-scrollbar { width: 8px; }
-        .story-scroll-box::-webkit-scrollbar-track { background: #FFFBF7; border-radius: 10px; }
-        .story-scroll-box::-webkit-scrollbar-thumb { background-color: #FFB78C; border-radius: 10px; }
-        
-        #hero-text::after { content: '|'; margin-left: 0.5rem; animation: blink-caret .75s step-end infinite; }
-        @keyframes blink-caret { from, to { opacity: 1; } 50% { opacity: 0; } }
-        #hero-text.typing-done::after { animation: none; content: ''; }
-        
-        .content-wrapper { position: relative; z-index: 10; background-color: #FFFBF7; }
-        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
-        .animate-float { animation: float 6s ease-in-out infinite; }
-    </style>
 </head>
 <body class="bg-brand-bg text-brand-main">
 
     <header class="w-full border-b border-brand-sub">
         <nav class="container mx-auto px-6 py-6 flex justify-between items-center max-w-7xl">
-            <a href="#" class="flex items-center" aria-label="파푸파푸 홈으로 이동">
-                <img src="images/파푸파푸 로고.png" alt="브랜드 로고" class="h-20">
+            <a href="#" onclick="window.scrollTo({ top: 0, behavior: 'smooth' }); return false;" class="flex items-center" aria-label="파푸파푸 홈으로 이동">
+                <img src="images/pawpupawpu_logo.png" alt="브랜드 로고" class="h-20">
             </a>
             <div class="hidden md:flex items-center space-x-10 font-semibold text-lg">
-                <a href="#hero-section" class="hover:text-brand-emphasis transition-colors">홈</a>
+                <a href="javascript:void(0)" onclick="window.scrollTo({ top: 0, behavior: 'smooth' });" class="hover:text-brand-emphasis transition-colors">홈</a>
                 <a href="#brand-intro-section" class="hover:text-brand-emphasis transition-colors">브랜드</a>
                 <a href="#character-intro-section" class="hover:text-brand-emphasis transition-colors">캐릭터</a>
                 <a href="#store" class="hover:text-brand-emphasis transition-colors">상품</a>
@@ -92,7 +49,7 @@
     <main>
         <section id="hero-section" class="sticky top-0 w-full h-dvh-safe overflow-hidden">
             <div id="hero-content" class="relative w-full h-full">
-                <img src="images/클로버 gif.gif" alt="캐릭터 GIF" class="absolute top-0 left-0 w-full h-full object-cover z-0">
+                <img src="images/clover.gif" alt="캐릭터 GIF" class="absolute top-0 left-0 w-full h-full object-cover z-0">
                 <div class="absolute top-0 left-0 w-full h-full bg-black bg-opacity-30 z-10"></div>
                 <div class="relative z-20 h-full flex items-center justify-center text-white px-6">
                     <h1 id="hero-text" class="text-4xl md:text-5xl lg:text-6xl font-bold" style="text-shadow: 2px 2px 8px rgba(0,0,0,0.6);"></h1>
@@ -139,7 +96,7 @@
                     <div class="grid grid-cols-1 md:grid-cols-5 gap-12 items-center">
                         <div class="flex justify-center md:col-span-2 scroll-reveal from-left">
                             <div class="bg-brand-sub p-6 rounded-full w-64 h-64 md:w-80 md:h-80 mx-auto flex items-center justify-center overflow-hidden">
-                                 <img src="images/루디_V3.png" alt="루디" class="w-full h-full object-cover rounded-full">
+                                <img src="images/루디_V3.png" alt="루디" class="w-full h-full object-cover rounded-full">
                             </div>
                         </div>
                         <div class="text-left md:col-span-3 scroll-reveal from-right">
@@ -152,11 +109,11 @@
                                 <span class="char-hashtag">#하트발바닥</span>
                             </div>
                             <div class="story-scroll-box h-60 pr-3 space-y-4 text-brand-main/90 leading-relaxed">
-                                <p>어두운 공간에서는 가족들은 손발바닥에 빛이 안 나지만, 루디의 손발바닥에는 빛이나 ‘천적들에게 위치가 공개될 위험에 처해진다’라는 이유로 숲에 홀로 서게 되었다.</p>
+                                <p>어두운 공간에서는 가족들은 손발바닥에 빛이 안 나지만, 루디의 손발바닥에는 빛이 나 ‘천적들에게 위치가 공개될 위험에 처해진다’라는 이유로 숲에 홀로 서게 되었다.</p>
                                 <p>해가 져 어두운 밤이 되었을 때, 숲을 거닐다 혼자 있는 고양이를 만났다. 그 고양이는 ‘루나’다. 
                                     <br>혼자 있는 것을 싫어하여 루나에게 함께 지내자 권유했으나 단칼에 거절을 당했다.</p>
                                 <p>허나, 루디가 몇 걸음 걸어가니 루나는 생각이 바뀌었다며 권유를 받아들였다. 
-                                    <br>그렇게 두 친구들에게 긴 여정이 시작되었고, 루디는 많은 이들에게 빛나는 이정표가 되어주기 시작한다.</p>
+                                    <br>그렇게 두 친구들의 긴 여정이 시작되었고, 루디는 많은 이들에게 빛나는 이정표가 되어주기 시작한다.</p>
                             </div>
                         </div>
                     </div>
@@ -172,15 +129,15 @@
                                 <span class="char-hashtag luna-hashtag">#푸른하트</span>
                             </div>
                             <div class="story-scroll-box h-60 pr-3 space-y-4 text-brand-main/90 leading-relaxed">
-                                <p>숲에는 루나 말고도 다른 고양이가 있었다. 루나와는 가족처럼 지내며, 오래 함께할 것이라 믿은 친구가 갑작기 떠나버렸다.</p>
+                                <p>숲에는 루나 말고도 다른 고양이가 있었다. 루나와는 가족처럼 지내며, 오래 함께할 것이라 믿은 친구가 갑자기 떠나버렸다.</p>
                                 <p>어느날, 해가 져 어두워진 숲에서 우연히 손발바닥이 빛나는 강아지 '루디'를 만났다.
                                     <br>낯선 존재에 대한 경계심과, 다시 누군가와 가까워지는 것이 두려워 함께 지내자는 루디의 권유를 단칼에 거절했다.</p>
                                 <p>하지만, 등을 돌려 멀어지는 루디의 오렌지 빛 발자국이 어둠 속에 갇힌 자신을 구원해 줄 유일한 희망임을 직감하고, 그녀는 인생에서 두번째로 누군가와 함께 걷기로 결심하며 권유를 받아들였다. </p>
                             </div>
                         </div>
                         <div class="flex justify-center md:order-last md:col-span-2 scroll-reveal from-right">
-                             <div class="luna-bg p-6 rounded-full w-64 h-64 md:w-80 md:h-80 mx-auto flex items-center justify-center overflow-hidden">
-                                 <img src="images/루나_V3.png" alt="루나" class="w-full h-full object-cover rounded-full">
+                            <div class="luna-bg p-6 rounded-full w-64 h-64 md:w-80 md:h-80 mx-auto flex items-center justify-center overflow-hidden">
+                                <img src="images/루나_V3.png" alt="루나" class="w-full h-full object-cover rounded-full">
                             </div>
                         </div>
                     </div>
@@ -188,7 +145,7 @@
             </section>
             
             <section class="py-20 bg-brand-bg">
-                 <div class="container mx-auto px-6 max-w-7xl">
+                <div class="container mx-auto px-6 max-w-7xl">
                     <h2 class="text-4xl font-bold text-center mb-12 scroll-reveal text-brand-main">우리의 일상 모습이 궁금해?</h2>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                         <div class="scroll-reveal zoom-in rounded-lg overflow-hidden shadow-lg transform transition duration-300 hover:scale-105">
@@ -219,9 +176,9 @@
                     <div class="grid md:grid-cols-2 gap-16 items-stretch">
                         
                         <div class="relative scroll-reveal from-left h-full">
-                             <div class="absolute w-[80%] h-[80%] bg-white/40 rounded-full blur-3xl -z-10 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"></div>
-                             
-                             <div class="bg-white rounded-2xl p-4 shadow-md h-full flex items-center justify-center overflow-hidden border border-white/50">
+                            <div class="absolute w-[80%] h-[80%] bg-white/40 rounded-full blur-3xl -z-10 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"></div>
+                            
+                            <div class="bg-white rounded-2xl p-4 shadow-md h-full flex items-center justify-center overflow-hidden border border-white/50">
                                 <img id="main-tshirt-image" src="images/티셔츠 목업_메인.png" alt="인터랙티브 티셔츠" class="w-full h-full object-cover rounded-xl transform hover:scale-105 transition-transform duration-500">
                             </div>
                         </div>
@@ -355,7 +312,7 @@
                                 <div class="absolute -top-4 left-1/2 transform -translate-x-1/2 w-24 h-8 bg-brand-main/20 -rotate-3 z-10 backdrop-blur-sm shadow-sm"></div>
                                 <div class="relative bg-white p-2 rounded-lg shadow-xl">
                                     <img src="images/파푸파푸_메모지.png" alt="메모지" class="w-full h-auto rounded">
-                                     <div class="absolute top-[25%] left-[15%] w-[70%] h-[60%] opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none flex items-center justify-center text-center">
+                                    <div class="absolute top-[25%] left-[15%] w-[70%] h-[60%] opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none flex items-center justify-center text-center">
                                         <p class="font-serif text-brand-main leading-relaxed text-sm md:text-lg">
                                             "기억하고 싶은<br>
                                             소중한 순간들을<br>
@@ -386,16 +343,16 @@
                     <div class="scroll-reveal from-right flex items-center justify-center min-h-[600px]">
                         <div class="relative w-full max-w-[900px] h-[600px] group flex justify-center items-center cursor-pointer">
                             <img src="images/Shot2.png" 
-                                 alt="다이어리 앱 UI 1" 
-                                 class="absolute w-[280px] md:w-[300px] h-auto object-contain rounded-[2.5rem] drop-shadow-2xl transform scale-90 -rotate-6 translate-x-[-20px] z-10 opacity-80 transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] group-hover:translate-x-[-240px] group-hover:rotate-[-15deg] group-hover:scale-100 group-hover:opacity-100 group-hover:z-20">
+                                alt="다이어리 앱 UI 1" 
+                                class="absolute w-[280px] md:w-[300px] h-auto object-contain rounded-[2.5rem] drop-shadow-2xl transform scale-90 -rotate-6 translate-x-[-20px] z-10 opacity-80 transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] group-hover:translate-x-[-240px] group-hover:rotate-[-15deg] group-hover:scale-100 group-hover:opacity-100 group-hover:z-20">
                             
                             <img src="images/Shot3.png" 
-                                 alt="다이어리 앱 UI 3" 
-                                 class="absolute w-[280px] md:w-[300px] h-auto object-contain rounded-[2.5rem] drop-shadow-2xl transform scale-90 rotate-6 translate-x-[20px] z-10 opacity-80 transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] group-hover:translate-x-[240px] group-hover:rotate-[15deg] group-hover:scale-100 group-hover:opacity-100 group-hover:z-20">
+                                alt="다이어리 앱 UI 3" 
+                                class="absolute w-[280px] md:w-[300px] h-auto object-contain rounded-[2.5rem] drop-shadow-2xl transform scale-90 rotate-6 translate-x-[20px] z-10 opacity-80 transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] group-hover:translate-x-[240px] group-hover:rotate-[15deg] group-hover:scale-100 group-hover:opacity-100 group-hover:z-20">
 
                             <img src="images/Shot1.png" 
-                                 alt="다이어리 앱 UI 2" 
-                                 class="absolute w-[300px] md:w-[320px] h-auto object-contain rounded-[2.5rem] drop-shadow-2xl transform z-30 transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] group-hover:scale-105 group-hover:-translate-y-4">
+                                alt="다이어리 앱 UI 2" 
+                                class="absolute w-[300px] md:w-[320px] h-auto object-contain rounded-[2.5rem] drop-shadow-2xl transform z-30 transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] group-hover:scale-105 group-hover:-translate-y-4">
                         </div>
                     </div>
                 </div>
@@ -408,16 +365,16 @@
                         <div class="poll-option cursor-pointer scroll-reveal rotate-in" data-character="char1">
                             <div class="relative p-6 bg-brand-sub rounded-full shadow-lg transition-transform duration-300">
                                 <img src="images/루디_V3.png" alt="캐릭터1" class="w-full rounded-full transition-transform duration-300">
-                                 <div class="poll-result absolute inset-0 bg-black bg-opacity-50 rounded-full flex-col items-center justify-center text-white hidden">
+                                <div class="poll-result absolute inset-0 bg-black bg-opacity-50 rounded-full flex-col items-center justify-center text-white hidden">
                                     <span class="text-4xl font-bold"></span><span class="text-sm"></span>
                                 </div>
                             </div>
                             <h3 class="poll-name text-2xl font-bold mt-4 transition-colors">루디</h3>
                         </div>
-                         <div class="poll-option cursor-pointer scroll-reveal rotate-in" style="transition-delay: 0.2s;" data-character="char2">
+                        <div class="poll-option cursor-pointer scroll-reveal rotate-in" style="transition-delay: 0.2s;" data-character="char2">
                             <div class="relative p-6 luna-bg rounded-full shadow-lg transition-transform duration-300">
                                 <img src="images/루나_V3.png" alt="캐릭터2" class="w-full rounded-full transition-transform duration-300">
-                                 <div class="poll-result absolute inset-0 bg-black bg-opacity-50 rounded-full flex-col items-center justify-center text-white hidden">
+                                <div class="poll-result absolute inset-0 bg-black bg-opacity-50 rounded-full flex-col items-center justify-center text-white hidden">
                                     <span class="text-4xl font-bold"></span><span class="text-sm"></span>
                                 </div>
                             </div>
@@ -448,231 +405,7 @@
             </div>
         </div>
     </footer>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            
-            // 1. 스크롤 애니메이션
-            const scrollElements = document.querySelectorAll('.scroll-reveal');
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => { 
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('visible');
-                    }
-                });
-            }, { threshold: 0.1 });
-            scrollElements.forEach(el => observer.observe(el));
-
-            const header = document.querySelector('header');
-            window.addEventListener('scroll', () => {
-                const isScrolled = window.scrollY > 50;
-                header.classList.toggle('shadow-lg', isScrolled);
-                header.style.backgroundColor = isScrolled ? 'rgba(255, 251, 247, 0.95)' : 'rgba(255, 251, 247, 0.8)';
-            });
-
-            // 2. 히어로 텍스트 타이핑 (빠른 속도: 50ms)
-            const heroTextElement = document.getElementById('hero-text');
-            const heroSection = document.getElementById('hero-section');
-            const textToType = "귀여운 발자국을 남기는\n사랑스러운 우리의 친구";
-
-            function typeWriter() {
-                let i = 0;
-                heroTextElement.innerHTML = ""; 
-                heroTextElement.classList.remove('typing-done');
-
-                function typeLoop() {
-                    if (i < textToType.length) {
-                        const char = textToType.charAt(i);
-                        if (char === '\n') {
-                            heroTextElement.innerHTML += '<br>';
-                        } else {
-                            heroTextElement.innerHTML += char;
-                        }
-                        i++;
-                        setTimeout(typeLoop, 50); 
-                    } else {
-                        heroTextElement.classList.add('typing-done'); 
-                    }
-                }
-                typeLoop();
-            }
-
-            const typeWriterObserver = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting && heroTextElement) {
-                        typeWriter();
-                    }
-                });
-            }, { threshold: 0.5 }); 
-            if (heroSection && heroTextElement) {
-                typeWriterObserver.observe(heroSection);
-            }
-
-            // 3. 히어로 스크롤 효과
-            const heroContent = document.getElementById('hero-content');
-            if (heroSection && heroContent) {
-                window.addEventListener('scroll', () => {
-                    const scrollY = window.scrollY;
-                    let progress = scrollY / 500;
-                    progress = Math.min(1, Math.max(0, progress));
-                    const scale = 1 - progress * 0.15;
-                    const borderRadius = progress * 24;
-                    heroContent.style.transform = `scale(${scale})`;
-                    heroContent.style.borderRadius = `${borderRadius}px`;
-                });
-            }
-            
-            // 4. 채팅 메시지
-            const chatContainer = document.getElementById('chat-container');
-            if (chatContainer) {
-                const messages = chatContainer.querySelectorAll('.chat-bubble');
-                let chatIndex = 0;
-                let chatTimer = null; 
-                const showMessagesSequentially = () => {
-                    if (chatIndex < messages.length) {
-                        messages[chatIndex].classList.add('visible'); 
-                        chatIndex++;
-                        chatTimer = setTimeout(showMessagesSequentially, 400); 
-                    }
-                };
-                const chatObserver = new IntersectionObserver((entries) => {
-                    if(entries[0].isIntersecting) {
-                        if (chatIndex === 0) showMessagesSequentially();
-                    } else {
-                         clearTimeout(chatTimer);
-                         messages.forEach(msg => msg.classList.remove('visible'));
-                         chatIndex = 0;
-                    }
-                }, { threshold: 0.3 }); 
-                chatObserver.observe(chatContainer);
-            }
-
-            // 5. 브랜드 소개글
-            const introTextWrapper = document.getElementById('brand-intro-text-wrapper');
-            const introLines = document.querySelectorAll('#brand-intro-text .intro-line');
-            if (introTextWrapper && introLines.length > 0) {
-                let lineIndex = 0;
-                let introTimer = null; 
-                const showLinesSequentially = () => {
-                    if (lineIndex < introLines.length) {
-                        introLines[lineIndex].classList.add('visible');
-                        lineIndex++;
-                        introTimer = setTimeout(showLinesSequentially, 200); 
-                    }
-                };
-                const introObserver = new IntersectionObserver((entries) => {
-                    if (entries[0].isIntersecting) {
-                        if (lineIndex === 0) showLinesSequentially();
-                    } else {
-                         clearTimeout(introTimer);
-                         introLines.forEach(line => line.classList.remove('visible'));
-                         lineIndex = 0;
-                    }
-                }, { threshold: 0.1 });
-                introObserver.observe(introTextWrapper);
-            }
-
-            // 7. 인터랙티브 티셔츠
-            const mainTshirtImage = document.getElementById('main-tshirt-image');
-            const expressionGrid = document.getElementById('expression-grid');
-            const imageData = {
-                rudy: {
-                    default: 'images/티셔츠 목업_메인.png', 
-                    expressions: [
-                        'images/루디_티셔츠1_목업.png',
-                        'images/루나_티셔츠1_목업.png'
-                    ],
-                    thumbs: [
-                        'images/루디_티셔츠1.png',
-                        'images/루나_티셔츠1.png'
-                    ]
-                }
-            };
-            function loadExpressions() {
-                if (!expressionGrid || !mainTshirtImage) return;
-                expressionGrid.innerHTML = '';
-                const charData = imageData.rudy; 
-                charData.thumbs.forEach((thumbSrc, index) => {
-                    const img = document.createElement('img');
-                    img.src = thumbSrc;
-                    img.alt = `rudy expression ${index + 1}`;
-                    img.className = 'expression-thumb cursor-pointer rounded-2xl w-full bg-white p-2 shadow-md border-2 border-transparent hover:border-brand-emphasis transition-all';
-                    img.dataset.tshirtSrc = charData.expressions[index];
-                    img.addEventListener('mouseover', () => { mainTshirtImage.src = img.dataset.tshirtSrc; });
-                    expressionGrid.appendChild(img);
-                });
-            }
-            loadExpressions(); 
-
-            // 8. 투표 기능
-            const pollSection = document.getElementById('poll-section');
-            if (pollSection) {
-                const pollOptions = pollSection.querySelectorAll('.poll-option');
-                let votes = JSON.parse(localStorage.getItem('pawpu_votes')) || { char1: 0, char2: 0 };
-                function updatePollResults(show) {
-                    const totalVotes = Object.values(votes).reduce((s, c) => s + c, 0);
-                    pollOptions.forEach(option => {
-                        const charId = option.dataset.character;
-                        const resultEl = option.querySelector('.poll-result');
-                        const charVotes = votes[charId] || 0;
-                        const percentage = totalVotes === 0 ? 0 : ((charVotes / totalVotes) * 100).toFixed(1);
-                        resultEl.querySelector('span:first-child').textContent = `${percentage}%`;
-                        resultEl.querySelector('span:last-child').textContent = `${charVotes} votes`;
-                        if(show) {
-                            resultEl.classList.remove('hidden');
-                            resultEl.classList.add('flex'); 
-                        }
-                    });
-                }
-                pollOptions.forEach(option => {
-                    option.addEventListener('click', () => {
-                        if (pollSection.classList.contains('voted')) return;
-                        pollSection.classList.add('voted');
-                        option.classList.add('selected');
-                        const charId = option.dataset.character;
-                        if(votes.hasOwnProperty(charId)) votes[charId]++;
-                        else votes[charId] = 1;
-                        localStorage.setItem('pawpu_votes', JSON.stringify(votes));
-                        pollOptions.forEach(opt => opt.classList.add('voted'));
-                        updatePollResults(true);
-                    });
-                });
-            }
-
-            // 9. 내비게이션
-            document.querySelectorAll('header nav a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    const targetId = this.getAttribute('href');
-                    const targetElement = document.querySelector(targetId);
-                    if (targetElement) {
-                        const header = document.querySelector('header');
-                        const headerHeight = header ? header.offsetHeight : 0;
-                        const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - headerHeight;
-                        window.scrollTo({ top: targetPosition, behavior: 'smooth' });
-                    }
-                });
-            });
-
-            // 10. 상단 이동 버튼
-            const scrollToTopBtn = document.getElementById('scrollToTopBtn');
-            const handleScroll = () => {
-                if (!scrollToTopBtn) return;
-                if (window.scrollY > 300) {
-                    scrollToTopBtn.style.opacity = '1';
-                    scrollToTopBtn.style.pointerEvents = 'auto'; 
-                } else {
-                    scrollToTopBtn.style.opacity = '0';
-                    scrollToTopBtn.style.pointerEvents = 'none'; 
-                }
-            };
-            const scrollToTop = () => { window.scrollTo({ top: 0, behavior: 'smooth' }); };
-            if (scrollToTopBtn) {
-                window.addEventListener('scroll', handleScroll);
-                scrollToTopBtn.addEventListener('click', scrollToTop);
-                handleScroll();
-            }
-        });
-    </script>
+    
+    <script src="script.js"></script>
 </body>
 </html>
